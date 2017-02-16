@@ -12,13 +12,13 @@ var MongoClient = require('mongodb').MongoClient;
 
 
 //mongoose.connect('mongodb://40.83.182.235/saludOcupacional', function(error){
-/*mongoose.connect('mongodb://localhost/SaludOcupacional', function(error){
+mongoose.connect('mongodb://localhost/ControlBodegas', function(error){
     if(error){
         throw error;
     }else{
         console.log('Conectado a MongoDB');
     }
-});*/
+});
 // </editor-fold>
 
 
@@ -35,7 +35,6 @@ app.use(cors());// permite angular interactuar
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
-
 app.use('/api',require('./Routes/apiUsuarios'));
 
 
