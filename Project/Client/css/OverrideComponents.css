@@ -1,5 +1,8 @@
 /*solo componentes bootstrap*/
-
+@font-face {
+    font-family: OCRAStd;
+    src: url(../font-awesome-4.7.0/OCRAStd.otf);
+}
 .jumbotron{
 
 
@@ -45,4 +48,9 @@ body {
 
 .img2{
    width: 20%; height: 20%; text-align: center;
+}
+
+.tipoGrafia{
+
+    font-family: OCRAStd;
 }
