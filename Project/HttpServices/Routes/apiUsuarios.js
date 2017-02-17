@@ -11,7 +11,7 @@ var url = 'mongodb://localhost:27017/OmbuDelivery';
 
 
 
-router.post('/usuarios',function(req,res){
+router.post('/SaveUsuarios',function(req,res){
     //console.log(req.param('var1'));
     //res.send(req.param('var1'));
    // var vec= req.param('items');
@@ -20,7 +20,7 @@ router.post('/usuarios',function(req,res){
         assert.equal(null, err);
         // insertDocument(db, function() {
         console.log(req.body);
-        var collection =db.collection('usaurios');
+        var collection =db.collection('usuarios');
         collection.insert(req.body, {
 
         } );

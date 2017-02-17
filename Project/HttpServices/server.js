@@ -36,8 +36,12 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 app.use('/api',require('./Routes/apiUsuarios'));
-
-
+app.use('/api',require('./Routes/apiCliente'));
+app.use('/api',require('./Routes/apiProducto'));
+app.use('/api',require('./Routes/apiVehiculo'));
+app.use('/api',require('./Routes/apiChofer'));
+app.use('/api',require('./Routes/apiOrden'));
+app.use('/api',require('./Routes/apiDelivery'));
 // </editor-fold >
 
 // <editor-fold defaultstate="collapsed" desc="Server Run">
