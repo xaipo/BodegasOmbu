@@ -40,11 +40,12 @@ router.post('/updateDelivery',function(req,res){
         console.log(req.body);
 
         var lista = [];
-        var n = req.body.listaDelivery.length;
-        for(var i=0; i<n; i++){
-            var subItem ='';
-            subItem.id_orden = req.body.listaDelivery[i].id_orden;
-            subItem.tiempo_estimado_carga_descarga = req.body.listaDelivery[i].tiempo_estimado_carga_descarga;
+        var n = req.body.ordenes.length;
+        for(var i=0; i<n; i++) {
+            var subItem = {
+                id_orden : req.body.ordenes[i].id_orden,
+                tiempo_estimado_carga_descarga : req.body.ordenes[i].tiempo_estimado_carga_descarga,
+            };
             lista.push(subItem);
         }
 
