@@ -4,6 +4,7 @@
 var express= require('express');
 var router= express.Router();
 var MongoClient = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 var assert = require('assert');
 var url = 'mongodb://localhost:27017/OmbuDelivery';
 
@@ -39,12 +40,13 @@ router.post('/updateOrden',function(req,res){
         console.log(req.body);
 
         var lista = [];
-        var n = req.body.listaOrdenes.length;
+        var n = req.body.productos.length;
         for(var i=0; i<n; i++){
-            var subItem ='';
-            subItem.id_producto = req.body.listaOrdenes[i].id_producto;
-            subItem.cantidad = req.body.listaOrdenes[i].cantidad;
-            subItem.peso_total = req.body.listaOrdenes[i].peso_total;
+            var subItem ={
+                id_producto : req.body.productos[i].id_producto,
+                cantidad : req.body.productos[i].cantidad,
+                peso_total : req.body.productos[i].peso_total
+            };
             lista.push(subItem);
         }
 
