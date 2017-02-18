@@ -59,11 +59,15 @@ $scope.user.password=
         }else{
             var resp = {
 
-                name:response.data.name,
-                _id:response.data._id
+                name:response.data.value.name,
+                _id:response.data.value._id
 
             }
-            window.localStorage.setItem("se", JSON.stringify(response.data.tk));
+            console.log(response.data.value);
+            console.log(resp);
+            var obj= response.data;
+            console.log(obj);
+            window.localStorage.setItem("se", JSON.stringify(response.data.value.tk));
             window.localStorage.setItem("usuario", JSON.stringify(resp));
             window.location ='./index.html';
         }

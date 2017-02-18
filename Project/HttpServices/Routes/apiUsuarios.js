@@ -7,6 +7,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var url = 'mongodb://localhost:27017/OmbuDelivery';
 var suid = require('rand-token').suid;
+var objectId = require('mongodb').ObjectID;
 
 router.post('/login',function(req,res){
 
@@ -17,13 +18,18 @@ router.post('/login',function(req,res){
 
         var name = req.body.name;
         var password = req.body.password;
-        db.collection('usuarios').findOne({"name":name,"password":password}, function(err, result) {
+        var token = suid(200);
+        var item={
+            name:name,
+            password:password,
+            tk:token
+
+        }
+        db.collection('usuarios').findOneAndUpdate({"name":name,"password":password}, {$set: item},function(err, result) {
             assert.equal(null, err);
             console.log(result);
-            console.log('Item loaded');
-            var token = suid(200);
-            result.tk=token;
-            res.send(result);
+                res.send(result);
+
         });
 
         db.close();
