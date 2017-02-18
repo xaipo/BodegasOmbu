@@ -6,8 +6,8 @@ var app = angular.module("myApp", ['ngStorage','ngRoute'])
 
 function ApiUrl(){
 
-    this.getUser=function(){
-        return 'http://localhost:3000/api/usuarios';
+    this.getLogin=function(){
+        return 'http://localhost:3000/api/login';
     }
 
 
