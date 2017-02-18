@@ -122,23 +122,24 @@
             <div class="container">
 
                 <div class="row">
-                    <div class="col-md-6 col-xs-0"></div>
+                    <div class="col-md-8 col-xs-0"></div>
 
                     <div class="col-md-4 col-xs-8">
                         <br>
                         <br>
-                        <input type="text" class="form-control" placeholder="Buscar">
-
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
                     </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-xs-0"></div>
 
                     <div class="col-md-2 col-xs-4">
                         <br>
-                        <br>
-                        <button class="form-control" type="button">
-                            <span class="fa fa-search"></span>
-                        </button>
-                        <br>
-                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal2">
+
+                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
