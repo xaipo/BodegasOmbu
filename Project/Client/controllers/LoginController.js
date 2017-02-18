@@ -88,4 +88,11 @@ $scope.user.password=
 
 
 
+    $scope.logout=function(){
+
+        localStorage.removeItem('se');
+        localStorage.removeItem('usuario');
+
+    }
+
 }]);
