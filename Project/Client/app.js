@@ -10,6 +10,22 @@ function ApiUrl(){
         return 'http://localhost:3000/api/usuarios';
     }
 
+
+    this.getCliente = function(){
+        return 'http://localhost:3000/api';
+    }
+
+    this.getProducto = function(){
+        return 'http://localhost:3000/api';
+    }
+
+    this.getChofer = function(){
+        return 'http://localhost:3000/api';
+    }
+
+    this.getVehiculo = function(){
+        return 'http://localhost:3000/api';
+    }
 }
 
 app.factory("myProvider",function(){

@@ -18,7 +18,7 @@
     <script src="./app.js"></script>
 
 
-    <script src="./controllers/LoginController.js"></script>
+    <script src="./controllers/ProductoController.js"></script>
     <script src="./angular-1.4.6/angular-local-storage.min.js"></script>
     <style>
         .selected {
@@ -29,7 +29,7 @@
 
     </style>
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="ProductoController">
 
 <script src="./scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="./scripts/bootstrap.min.js"></script>
@@ -111,7 +111,7 @@
 </header>
 <!-----main -->
 <div class="jumbotron">
-    <form class="form-control">
+    <form class="form-control" ng-init="inicializar()">
         <div class="panel ">
             <div class="panel-heading hidden-print">
 
@@ -125,7 +125,7 @@
                     <div class="col-md-4 col-xs-8">
                         <br>
                         <br>
-                        <input type="text" class="form-control" placeholder="Buscar">
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
 
                     </div>
 
@@ -136,7 +136,7 @@
                             <span class="fa fa-search"></span>
                         </button>
                         <br>
-                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal2">
+                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
@@ -160,66 +160,16 @@
 
                             </tr>
 
-                            <th>thefuck1!!!</th>
-                            <th>thefuck!2!!</th>
-                            <th>thefuck!!3!</th>
-                            <th>thefuck!!!4</th>
-                            <th>thefuck!!!5</th>
+
 
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
-
-
-
-                            </tr>
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
-
-
-                            </tr>
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
-
-
-                            </tr>
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
-
-
-                            </tr>
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
-
-
-                            </tr>
-                            <tr>
-                                <th>thefuck1!!!</th>
-                                <th>thefuck!2!!</th>
-                                <th>thefuck!!3!</th>
-                                <th>thefuck!!!4</th>
-                                <th>thefuck!!!5</th>
+                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                                <td>{{$index}}</td>
+                                <td>{{ item.codigo }}</td>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.detalle }}</td>
+                                <td>{{ item.peso }}</td>
 
 
                             </tr>
@@ -265,25 +215,22 @@
                                 <div class="col-md-12 col-xs-12">
 
                                     <div></div>
-                                    <label>Cedula</label>
+                                    <label>Código</label>
                                     <br>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="obj.codigo">
                                     <br>
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="obj.nombre">
                                     <br>
                                     <br>
-                                    <label>Telefono</label>
-                                    <input type="text" class="form-control">
+                                    <label>Detalle</label>
+                                    <input type="text" class="form-control" ng-model="obj.detalle">
                                     <br>
                                     <br>
-                                    <label>Email</label>
-                                    <input type="text" class="form-control">
+                                    <label>Peso</label>
+                                    <input type="text" class="form-control" ng-model="obj.peso">
                                     <br>
-                                    <br>
-                                    <label>Direccion</label>
-                                    <input type="text" class="form-control">
-                                    <br>
+
 
                                 </div> <!-- aqui el contenido del formulario-->
                             </div>
@@ -291,7 +238,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">Ingresar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="save()">Ingresar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
@@ -319,24 +266,20 @@
                                 <div class="col-md-12 col-xs-12">
 
                                     <div></div>
-                                    <label>Cedula</label>
+                                    <label>Código</label>
                                     <br>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="selected.codigo">
                                     <br>
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="selected.nombre">
                                     <br>
                                     <br>
-                                    <label>Telefono</label>
-                                    <input type="text" class="form-control">
+                                    <label>Detalle</label>
+                                    <input type="text" class="form-control" ng-model="selected.detalle">
                                     <br>
                                     <br>
-                                    <label>Email</label>
-                                    <input type="text" class="form-control">
-                                    <br>
-                                    <br>
-                                    <label>Direccion</label>
-                                    <input type="text" class="form-control">
+                                    <label>Peso</label>
+                                    <input type="text" class="form-control" ng-model="selected.peso">
                                     <br>
                                     <!-- aqui el contenido del formulario-->
 
@@ -348,7 +291,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">Ingresar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update()">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>

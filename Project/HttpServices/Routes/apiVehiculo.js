@@ -39,10 +39,10 @@ router.post('/updateVehiculo',function(req,res){
         assert.equal(null, err);
         console.log(req.body);
         var item = {
-            placa: req.body.cedula,
-            marca: req.body.nombre,
-            modelo: req.body.telefono,
-            carga: req.body.email
+            placa: req.body.placa,
+            marca: req.body.marca,
+            modelo: req.body.modelo,
+            carga: req.body.carga
         };
         var id = req.body.id;
         db.collection('vehiculo').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
