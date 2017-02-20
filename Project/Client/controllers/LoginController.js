@@ -11,7 +11,7 @@ $scope.estadoInicio=function(){
         window.location ='./index.html';
 
     }
-    console.log($scope.us);
+ //   console.log($scope.us);
 }
 
 
@@ -24,8 +24,8 @@ $scope.token='';
 
 $scope.login=function(){
 
-console.log('entrar1');
-console.log($scope.user);
+//console.log('entrar1');
+//console.log($scope.user);
 
 if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!='')    {
 
@@ -33,7 +33,7 @@ if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefi
 
 $scope.user.pass=SHA1($scope.user.pass);
 
-console.log($scope.user.pass);
+//console.log($scope.user.pass);
 
 $scope.user.password=
     $http({
@@ -53,17 +53,21 @@ $scope.user.password=
     }).then(function successCallback(response) {
 
 
-        if(response.data==undefined||response.data==''){
+        if(response.data.value==undefined||response.data.value==''){
 
             alert('Error al ingresar');
         }else{
             var resp = {
 
-                name:response.data.name,
-                _id:response.data._id
+                name:response.data.value.name,
+                _id:response.data.value._id
 
             }
-            window.localStorage.setItem("se", JSON.stringify(response.data.tk));
+            //console.log(response.data.value);
+            //console.log(resp);
+            var obj= response.data;
+            //console.log(obj);
+            window.localStorage.setItem("se", JSON.stringify(response.data.value.tk));
             window.localStorage.setItem("usuario", JSON.stringify(resp));
             window.location ='./index.html';
         }
@@ -83,5 +87,12 @@ $scope.user.password=
 }
 
 
+
+    $scope.logout=function(){
+
+        localStorage.removeItem('se');
+        localStorage.removeItem('usuario');
+
+    }
 
 }]);

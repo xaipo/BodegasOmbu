@@ -26,6 +26,10 @@ function ApiUrl(){
     this.getVehiculo = function(){
         return 'http://localhost:3000/api';
     }
+
+    this.getOrden = function(){
+        return 'http://localhost:3000/api';
+    }
 }
 
 app.factory("myProvider",function(){
