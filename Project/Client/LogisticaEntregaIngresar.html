@@ -65,7 +65,8 @@
                                               style="max-width: 100px; max-height: 50px"/></a><br><br>
                 </div>
                 <div class="col-md-3 col-xs-6">
-                    <a href="index.html" class="navbar-brand" style="color:#4290A5 ; font-family: OCRAStd; ">Storage System </a>
+                    <a href="index.html" class="navbar-brand" style="color:#4290A5 ; font-family: OCRAStd; ">Storage
+                        System </a>
 
                 </div>
                 <div class="col-md-0  col-xs-2">
@@ -116,215 +117,223 @@
 
             </div>
             <div class="container">
-
                 <div class="row">
-                    <div class="col-md-8 col-xs-0"></div>
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Codigo de Delivery</h4>
+                    </div>
 
-                    <div class="col-md-4 col-xs-8">
-                        <br>
-                        <br>
-                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    <div class="col-md-2 col-xs-8">
+                        <label class="form-control"> </label>
                     </div>
 
 
                 </div>
 
-                    <div>
-                        <h4>Choferes</h4>
-                        <br>
+                <div class="row">
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Vehiculo</h4>
+                    </div>
 
-                        <select name="TipoCie"  class="form-control" multiple
-                                style="height: 150px;" >
-                            <option>1 </option>
-                            <option>2 </option>
-                            <option>3</option>
+                    <div class="col-md-2 col-xs-8">
+                        <select name="TipoCie" class="form-control" simple>
+                        <option>Por Entregar</option>
+                        <option>Entregado</option>
+                    </select>
+                    </div>
+                    <div class="col-md-4 col-md-0"></div>
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Carga Vehiculo</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <label class="form-control"> </label>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Chofer</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <select name="TipoCie" class="form-control" simple>
+                            <option>Por Entregar</option>
+                            <option>Entregado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-md-0"></div>
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Fecha</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <input type="date" class="form-control">
+                    </div>
+
+                    <br>
+                    <br>
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Hora de Inicio</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <input class="form-control" placeholder="Horas" type="number" min="0" max="24">
+
+                    </div>
+                    <div class="col-md-2 col-xs-8">
+                        <input class="form-control" placeholder="Minutos" type="number" min="0" max="59">
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Hora de Retorno</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <input class="form-control" placeholder="Horas" type="number" min="0" max="24">
+
+                    </div>
+                    <div class="col-md-2 col-xs-8">
+                        <input class="form-control" placeholder="Minutos" type="number" min="0" max="60">
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Estado</h4>
+                    </div>
+                    <div class="col-md-2 col-xs-0">
+                        <select name="TipoCie" class="form-control" simple>
+                            <option>Por Entregar</option>
+                            <option>Entregado</option>
                         </select><br>
-
                     </div>
 
                 </div>
-
-
-
-            <div class="container">
 
 
                 <div class="row">
-                    <div class="col-md-8 col-xs-0"></div>
+                    <div class="col-md-3 col-xs-0"> </div>
 
-                    <div class="col-md-4 col-xs-8">
-                        <br>
-                        <br>
-                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    <div class="col-md-4 col-xs-0">
+
+                        <h4>Orden</h4>
                     </div>
-
-
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Producto</h4>
+                    </div>
                 </div>
 
-                <div>
-                    <h4>Vehiculos</h4>
-                    <br>
-
-                    <select name="TipoCie"  class="form-control" multiple
-                            style="height: 150px;" >
-                        <option>1 </option>
-                        <option>2 </option>
-                        <option>3</option>
-                    </select><br>
-
-                </div>
 
                 <div class="row">
-                    <div class="col-md-8 col-xs-0"></div>
-
-                    <div class="col-md-4 col-xs-8">
-                        <br>
-                        <br>
-                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    <div class="col-md-1 col-xs-0"></div>
+                    <div class="col-md-4 col-xs-0">
+                        <select name="TipoCie" class="form-control" multiple style="height:150px">
+                            <option>Por Entregar</option>
+                            <option>Entregado</option>
+                        </select><br>
                     </div>
 
-
-                </div>
-
-                <div>
-                    <h4>Orden</h4>
-                    <br>
-
-                    <select name="TipoCie"  class="form-control" multiple
-                            style="height: 150px;" >
-                        <option>1 </option>
-                        <option>2 </option>
-                        <option>3</option>
-                    </select><br>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <table class="table table-hover">
-
-                            <h4>Producto</h4>
-                            <br>
-
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Detalle</th>
-                                <th>Peso</th>
-                                <th>Estado</th>
-
-                            </tr>
-
-
-
-                            </thead>
-                            <tbody data-toggle="modal" data-target="#myModal2">
-                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
-                                <td>{{$index}}</td>
-                                <td>{{ item.codigo }}</td>
-                                <td>{{ item.nombre }}</td>
-                                <td>{{ item.detalle }}</td>
-                                <td>{{ item.peso }}</td>
-
-
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <br>
-                <br>
-
-                <div class="row">
-                    <div class="col-md-3 col-xs-1"></div>
-                    <div class="col-md-3 col-xs-5">
-
-                        <button type="button" class="btn btn-default form-control">Agregar</button>
-                        <br> <br>
-
-
-                    </div>
-                    <div class="col-md-3 col-xs-5">
-                        <button type="button" class="btn btn-default form-control ">Quitar</button>
-                        <br> <br>
+                    <div class="col-md-1 col-xs-0"></div>
+                    <div class="col-md-4 col-xs-0">
+                        <select name="TipoCie" class="form-control" multiple style="height:150px">
+                            <option>Por Entregar</option>
+                            <option>Entregado</option>
+                        </select><br>
                     </div>
 
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <table class="table table-hover">
-
-                            <h4>Producto Seleccionado</h4>
-                            <br>
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Detalle</th>
-                                <th>Peso</th>
-                                <th>Estado</th>
-
-                            </tr>
+                    <div class="col-md-10 col-xs-0"></div>
 
 
 
-                            </thead>
-                            <tbody data-toggle="modal" data-target="#myModal2">
-                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
-                                <td>{{$index}}</td>
-                                <td>{{ item.codigo }}</td>
-                                <td>{{ item.nombre }}</td>
-                                <td>{{ item.detalle }}</td>
-                                <td>{{ item.peso }}</td>
 
-
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <br>
-                <br>
-
-                <div class="row">
-                    <div class="col-md-5 col-xs-5">
-
-                        <br> <br>
-
-
-                    </div>
-                    <div class="col-md-2 col-xs-5">
+                    <div class="col-md-2 col-xs-0">
                         <button type="button" class="btn btn-default form-control ">Guardar</button>
                         <br> <br>
                     </div>
-
                 </div>
 
+
+                <div class="row">
+                    <div class="col-md-2 col-xs-0"> </div>
+
+                    <div class="col-md-4 col-xs-0">
+
+                        <h4>Orden Seleccionada</h4>
+                    </div>
+
+                    <div class="col-md-1 col-xs-0"></div>
+                    <div class="col-md-3 col-xs-0">
+                        <h4>Producto Seleccionado</h4>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-1 col-xs-0"></div>
+                    <div class="col-md-4 col-xs-0">
+                        <select name="TipoCie"  class="form-control" multiple style="height:150px">
+                            <option>Por Entregar </option>
+                            <option>Entregado</option>
+                        </select><br>
+                    </div>
+
+                    <div class="col-md-1 col-xs-0"></div>
+                    <div class="col-md-4 col-xs-0">
+                        <select name="TipoCie"  class="form-control" multiple style="height:150px">
+                            <option>Por Entregar </option>
+                            <option>Entregado</option>
+                        </select><br>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-2 col-xs-0">
+                        <h4>Carga Acumulada</h4>
+                    </div>
+
+                    <div class="col-md-2 col-xs-8">
+                        <label class="form-control"> </label>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-10 col-xs-0">
+
+                        <div class="row">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-xs-0">
+                        <button type="button" class="btn btn-default form-control ">Guardar</button>
+                        <br> <br>
+                    </div>
+                </div>
+
+
+
+
             </div>
-
         </div>
-
-
-
-
-
     </form>
-
-    </form>
-
 </div>
-</div>
-</div>
-
-</form>
-</div>
-
-
 </body>
 </html>
