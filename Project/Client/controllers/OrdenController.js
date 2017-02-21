@@ -6,6 +6,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
 
     $scope.listaClientes = [];
+    $scope.selectedCliente;
     $scope.objCliente = {
         _id:'',
         cedula : '',
@@ -14,11 +15,9 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         email:'',
         direccion:''
     };
+    $scope.objClienteSelect='';
+    $scope.searchCliente = '';
 
-    $scope.selectedCliente = function()
-    {
-        $scope.objCliente = $scope.listaClientes.selec
-    }
 
     $scope.listaProductos = [];
     $scope.listaProductosMultiselected = [];
@@ -29,7 +28,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         detalle: '',
         peso: ''
     };
-
+    $scope.objProductoSelect='';
 
 
 
@@ -39,28 +38,98 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
     $scope.selectedRow ;
     $scope.search = '';
 
-    $scope.selected = "";
+    $scope.selected = '';
+    $scope.selectedProd = '';
+    $scope.selectedProdRow;
 
 
      $scope.subItem ={
-        id_Orden : '',
-        cantidad : '',
-        peso_total : ''
+         id_producto : '',
+         nombre_producto:'',
+         cantidad : 0,
+         peso_unit:0,
+         peso_total : 0,
+         estado : 0
     };
+
+    $scope.subItemBD ={
+        id_producto : '',
+        cantidad : 0,
+        peso_total : 0,
+        estado : 0
+    };
+    $scope.listaSubitemBD= [];
 
     $scope.listaSubitem = [];
 
     $scope.obj = {
+        codigo:'',
         id_cliente: '',
         fecha_orden: '',
         numero_factura: '',
         fecha_factura: '',
-        hora_orden: '',
+        hora_orden: 0,
+        minutos_orden:0,
         direccion : '',
         observacion : '',
-        estado : '',
+        estado : 0,
         productos: []
     };
+
+
+    $scope.changeTypeCliente=function(){
+        console.log($scope.objCliente);
+        $scope.objCliente=JSON.parse($scope.objClienteSelect);
+        $scope.obj.id_cliente=$scope.objCliente._id;
+    }
+
+    $scope.changeTypeProducto=function(){
+        console.log($scope.objProducto);
+        $scope.objProducto=JSON.parse($scope.objProductoSelect);
+    }
+
+    $scope.calculoPesoTotal=function(){
+
+        $scope.subItem.peso_total = $scope.objProducto.peso * $scope.subItem.cantidad;
+    }
+
+    $scope.calculoPesoTotalSelected=function(){
+
+        $scope.selectedProd.peso_total = $scope.selectedProd.peso_unit * $scope.selectedProd.cantidad;
+    }
+
+    $scope.agregarProducto = function(){
+
+
+        $scope.subItem.id_producto = $scope.objProducto._id;
+        $scope.subItem.nombre_producto = $scope.objProducto.nombre;
+        $scope.subItem.peso_unit = $scope.objProducto.peso;
+        $scope.subItem.estado = 0;
+
+        $scope.listaSubitem.push($scope.subItem);
+        $scope.subItem ={
+            id_producto : '',
+            nombre_producto:'',
+            cantidad : 0,
+            peso_unit:0,
+            peso_total : 0,
+            estado : 0
+        };
+
+
+    }
+
+    $scope.setClickedRowProducto = function(index, item){
+
+        $scope.selectedProdRow = index;
+        $scope.selectedProd = item;
+        console.log('selectedProd: '+$scope.selectedProd.nombre_producto);
+
+    }
+
+    $scope.deleteProdSelected = function(){
+        $scope.listaSubitem.splice($scope.selectedProd,1);
+    }
 
 
     $scope.cargaClientesProductos = function () {
@@ -191,6 +260,24 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
     $scope.save = function (){
 
+        $scope.listaSubitemBD=[];
+        for(var i=0; i<$scope.listaSubitem.length; i++){
+
+            $scope.subItemBD ={
+                id_producto : '',
+                cantidad : 0,
+                peso_total : 0,
+                estado : 0
+            };
+
+            $scope.subItemBD.id_producto = $scope.listaSubitem[i].id_producto;
+            $scope.subItemBD.cantidad = $scope.listaSubitem[i].cantidad;
+            $scope.subItemBD.peso_total = $scope.listaSubitem[i].peso_total;
+            $scope.subItemBD.estado = $scope.listaSubitem[i].estado;
+
+            $scope.listaSubitemBD.push($scope.subItemBD);
+        }
+
 
         $http({
             method: 'POST',
@@ -201,18 +288,20 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
             data:{
 
                 id_cliente: $scope.obj.id_cliente,
+                codigo: $scope.obj.codigo,
                 fecha_orden: $scope.obj.fecha_orden,
                 numero_factura: $scope.obj.numero_factura,
                 fecha_factura: $scope.obj.fecha_factura,
                 hora_orden: $scope.obj.hora_orden,
+                minutos_orden : $scope.minutos_orden,
                 direccion : $scope.obj.direccion,
                 observacion : $scope.obj.observacion,
                 estado : $scope.obj.estado,
-                productos: $scope.obj.productos
+                productos: $scope.listaSubitemBD
 
             }
         }).then(function successCallback(response) {
-            console.log('ENTRA2');
+
 
             $scope.obj = {
                 id_cliente: '',
@@ -224,6 +313,16 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 observacion : '',
                 estado : '',
                 productos: []
+            };
+            $scope.listaSubitemBD = [];
+            $scope.listaSubitem = [];
+            $scope.subItem={
+                id_producto : '',
+                nombre_producto:'',
+                cantidad : 0,
+                peso_unit:0,
+                peso_total : 0,
+                estado : 0
             };
             $scope.inicializar();
             console.log('POST');
@@ -256,7 +355,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 direccion : $scope.selected.direccion,
                 observacion : $scope.selected.observacion,
                 estado : $scope.selected.estado,
-                productos: $scope.selected.productos
+                productos: $scope.selected.listaSubitemBD
             }
         }).then(function successCallback(response) {
             $scope.obj = {

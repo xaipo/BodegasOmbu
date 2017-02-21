@@ -117,16 +117,19 @@
 
 
                 <div class="row">
-                    <div class="col-md-6 col-xs-0"></div>
+                    <div class="col-md-5 col-xs-2">
+                        <br/>
+                        <br/>
+                        <h5>CODIGO ORDEN: </h5>
+                        <input class="form-control" placeholder="Código"  type="text" ng-model="obj.codigo" />
+                    </div>
 
-                    <div class="col-md-4 col-xs-8">
+                    <div class="col-md-5 col-xs-6">
                         <br>
                         <br>
 
-                        <select name="clien"  class="form-control" single
-                                ng-options="objCliente.nombre for objCliente in listaClientes track by objCliente.id"
-                                ng-model="objCliente">
-
+                        <select name="clien" style="height: 100px" class="form-control" multiple ng-model="objClienteSelect" ng-click="changeTypeCliente()">
+                            <option ng-repeat="aux in listaClientes | filter:searchCliente" value="{{aux}}">{{aux.nombre}}</option>
                         </select>
 
                     </div>
@@ -134,16 +137,12 @@
                     <div class="col-md-2 col-xs-4">
                         <br>
                         <br>
-                        <button class="form-control" type="button">
-                            <span class="fa fa-search"></span>
-                        </button>
+                        <input type="text" class="form-control" placeholder="Buscar Cliente" ng-model="searchCliente">
                         <br>
-
                     </div>
                     <br>
                     <br>
                     <br>
-
                     <div>
 
                         <div class="row">
@@ -170,27 +169,26 @@
 
                             <div class="col-md-3 col-xs-0">
                                 <h5>Numero de Factura</h5>
-                                <input class="form-control" placeholder="0000000000" type="text" />
+                                <input class="form-control" placeholder="0000000000" type="text" ng-model="obj.numero_factura"/>
                             </div>
                             <div class="col-md-3 col-xs-0">
                                 <h5>Hora de la Orden</h5>
                                 <div class="col-md-6 col-xs-0">
-                                    <input class="form-control" placeholder="Horas" type="number" min="0" max="24" />
+                                    <input class="form-control" placeholder="Horas" type="number" min="0" max="24" ng-model="obj.hora_orden" />
                                 </div>
                                 <div class="col-md-6 col-xs-0">
-                                    <input class="form-control" placeholder="Minutos" type="number" min="0" max="60" />
+                                    <input class="form-control" placeholder="Minutos" type="number" min="0" max="60" ng-model="obj.minutos_orden" />
                                 </div>
 
                             </div>
                             <div class="col-md-3 col-xs-0">
                                 <h5>Fecha de la Orden</h5>
-                                <input class="form-control"  type="date" />
+                                <input class="form-control"  type="date" ng-model="obj.fecha_orden"/>
 
                             </div>
                             <div class="col-md-3 col-xs-0">
                                 <h5>Fecha de Factura</h5>
-                                <input class="form-control"  type="date" />
-
+                                <input class="form-control"  type="date" ng-model="obj.fecha_factura"/>
                             </div>
                         </div>
 
@@ -198,85 +196,75 @@
                             <div class="col-md-3 col-xs-0">
                                 <h5>Estado</h5>
                                 <select name="TipoCie"  class="form-control"single>
-                                    <option>Por Entregar </option>
-                                    <option>Entregado</option>
+                                    <option value="0">Por Entregar </option>
+                                    <option value="1">Entregado</option>
                                 </select><br>
                             </div>
+                            <div class="col-md-3 col-xs-0">
+                                <h5>Dirección</h5>
+                                <textarea class="text-capitalize col-md-12 col-xs-1" ng-model="obj.direccion"></textarea>
+                            </div>
 
-                        </div>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-12 col-xs-0">
-                                <h5>Observacion</h5>
-                                <textarea class="text-capitalize col-md-6 col-xs-0" ></textarea>
+                            <div class="col-md-6 col-xs-0">
+                                <h5>Observación</h5>
+                                <textarea class="text-capitalize col-md-12 col-xs-1" ng-model="obj.observacion"></textarea>
                             </div>
 
                         </div>
 
-                        <br>
-                        <br>
+
 
 
                         <div class="row">
-                            <div class="col-md-6 col-xs-0"></div>
 
+                            <div class="col-md-1 col-xs-0"></div>
                             <div class="col-md-4 col-xs-8">
                                 <br>
                                 <br>
-                                <input type="text" class="form-control" placeholder="Buscar Producto">
+                                <input type="text" class="form-control" placeholder="Buscar Producto" ng-model="search" />
 
                             </div>
+                            <div class="col-md-6 col-xs-0"></div>
 
-                            <div class="col-md-2 col-xs-4">
-                                <br>
-                                <br>
-                                <button class="form-control" type="button">
-                                    <span class="fa fa-search"></span>
-                                </button>
-                                <br>
+                        </div>
+
+                        <div class="row`">
+
+                            <div class="col-md-5 col-xs-1">
+
+                                <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objProductoSelect" ng-click="changeTypeProducto()">
+                                    <option ng-repeat="aux in listaProductos | filter:search" value="{{aux}}">{{aux.nombre}} ({{aux.codigo}})</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 col-xs-1">
+                                <label>PRODUCTO</label>
+                                <input  class="form-control" placeholder="Producto" type="text" ng-model="objProducto.nombre"  disabled />
+                            </div>
+
+                            <div class="col-md-2 col-xs-1">
+                                <label>CANTIDAD</label>
+                                <input  class="form-control" placeholder="Cantidad" type="number" ng-model="subItem.cantidad" ng-change="calculoPesoTotal()" />
+                                <br/>
+                                <br/>
+                                <button type="button" class="btn btn-default form-control" ng-click="agregarProducto()">Agregar</button>
+                            </div>
+                            <div class="col-md-2 col-xs-1">
+                                <label>PESO UNIT.</label>
+                                <input  class="form-control" placeholder="Peso Unit." type="text" ng-model="objProducto.peso"  disabled  />
+
+                                <br/>
+                                <label>PESO UNIT.</label>
+                                <input  class="form-control" placeholder="Peso Total" type="text" ng-model="subItem.peso_total"  disabled  />
                             </div>
                         </div>
 
-                        <select name="prod"  class="form-control" multiple
-                                ng-options="optProd.nombre for optProd in listaProductos track by optProd.id"
-                                ng-model="listaProductosMultiselected"
-                                style="...">
-
-                        </select><br>
-
-
-
-                        <h4>Producto Seleccionado</h4>
-                        <br/>
-                        <tt> = = = {{listaProductosMultiselected}}</tt>
-
-                        <div class="row">
-                            <div class="col-md-6 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-5">
-
-                                <button type="button" class="btn btn-default form-control">Agregar</button>
-                                <br> <br>
-
-
-                            </div>
-                            <div class="col-md-2 col-xs-5">
-                                <button type="button" class="btn btn-default form-control">Quitar</button>
-                                <br> <br>
-                            </div>
-
-                        </div>
 
                         <br>
                         <br>
 
-
-
-
-
                         <div class="row">
-                            <div class="col-md-12 col-xs-12">
+                            <div class="col-md-8 col-xs-12">
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
@@ -286,40 +274,86 @@
                                         <th>Peso Total</th>
 
                                     </tr>
-                                    <tr>
 
-                                        <th>thefuck1!!!</th>
-                                        <th>thefuck!2!!</th>
-                                        <th>thefuck!!3!</th>
-                                        <th>thefuck!!!4</th>
-                                    </tr>
 
                                     </thead>
 
+                                    <tbody data-toggle="modal" data-target="#myModal">
+                                    <tr ng-repeat="item in listaSubitem  | orderBy:item.nombre_producto" ng-class="{'selected':$index == selectedProdRow}" ng-click="setClickedRowProducto($index,item)" >
+                                        <td>{{$index}}</td>
+                                        <td>{{ item.nombre_producto }}</td>
+                                        <td>{{ item.cantidad }}</td>
+                                        <td>{{ item.peso_total }}</td>
+
+                                    </tr>
+
+                                    </tbody>
                                 </table>
                             </div>
+
+                            <div class="col-md-2 col-xs-5">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <button type="button" class="btn btn-default form-control" ng-click="save()">Guardar</button>
+                            </div>
+
                         </div>
-
-
                     </div>
-
                 </div>
-
             </div>
         </div>
 
 
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Producto Seleccionado</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12">
+
+                                    <div></div>
+                                    <label>Producto</label>
+                                    <br>
+                                    <input type="text" class="form-control" ng-model="selectedProd.nombre_producto" disabled>
+                                    <br>
+                                    <label>Cantidad</label>
+                                    <input type="number" class="form-control" ng-model="selectedProd.cantidad" ng-change="calculoPesoTotalSelected()">
+                                    <br>
+                                    <br>
+                                    <label>Peso Unit</label>
+                                    <input type="text" class="form-control" ng-model="selectedProd.peso_unit">
+                                    <br>
+                                    <br>
+                                    <label>Peso Total</label>
+                                    <input type="text" class="form-control" ng-model="selectedProd.peso_total" disabled>
+                                    <br>
+
+
+                                </div> <!-- aqui el contenido del formulario-->
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" >Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteProdSelected()">Eliminar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </form>
-
-    </form>
-
 </div>
-</div>
-</div>
-
-</form>
-</div>
-
 
 </body>
 </html>
