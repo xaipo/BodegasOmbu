@@ -1,7 +1,9 @@
 'use strict';
 
+
+
 // Declare app level module which depends on views, and components
-var app = angular.module("myApp", ['ngStorage','ngRoute'])
+var app = angular.module("myApp", ['ngStorage','ngRoute']);
 
 
 function ApiUrl(){
@@ -30,6 +32,10 @@ function ApiUrl(){
     this.getOrden = function(){
         return 'http://localhost:3000/api';
     }
+
+    this.getDelivery = function(){
+        return 'http://localhost:3000/api';
+    }
 }
 
 app.factory("myProvider",function(){
@@ -37,6 +43,11 @@ app.factory("myProvider",function(){
     return new ApiUrl();
 
 });
+
+
+
+
+
 
     app.config (function($routeProvider ,$provide){
    //$locationProvider.html5Mode(true);

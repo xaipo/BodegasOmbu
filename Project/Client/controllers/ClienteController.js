@@ -20,6 +20,9 @@ app.controller('ClienteController', ['$scope', '$http', '$location', 'myProvider
     };
 
 
+
+
+
 //funcion que llama a un web services cuando inicializa la pagina
     $scope.inicializar = function () {
 

@@ -45,7 +45,8 @@ router.post('/updateOrden',function(req,res){
             var subItem ={
                 id_producto : req.body.productos[i].id_producto,
                 cantidad : req.body.productos[i].cantidad,
-                peso_total : req.body.productos[i].peso_total
+                peso_total : req.body.productos[i].peso_total,
+                estado : req.body.productos[i].estado
             };
             lista.push(subItem);
         }
@@ -74,6 +75,50 @@ router.post('/updateOrden',function(req,res){
         db.close();
     });
 });
+
+
+router.post('/updateOrdenEstadoProductos',function(req,res){
+
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        console.log("verificacion: " + req.body);
+        var lista = [];
+        var n = req.body.productos.length;
+        for(var i=0; i<n; i++){
+            var subItem ={
+                id_producto : req.body.productos[i].id_producto,
+                cantidad : req.body.productos[i].cantidad,
+                peso_total : req.body.productos[i].peso_total,
+                estado : req.body.productos[i].estado
+            };
+            lista.push(subItem);
+        }
+
+        var item = {
+            /*id_cliente: req.body.id_cliente,
+            fecha_orden: req.body.fecha_orden,
+            numero_factura: req.body.numero_factura,
+            fecha_factura: req.body.fecha_factura,
+            hora_orden: req.body.hora_orden,
+            direccion : req.body.direccion,
+            observacion : req.body.observacion,*/
+            estado : req.body.estado,
+            productos: lista
+        };
+
+        var id = req.body.id;
+        db.collection('orden').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
+            assert.equal(null, err);
+            console.log('Item updated');
+            console.log(result);
+            res.send(result);
+        });
+
+        db.close();
+    });
+});
+
 
 router.post('/getByIdOrden',function(req,res){
 

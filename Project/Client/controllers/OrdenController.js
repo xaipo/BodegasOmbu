@@ -128,7 +128,8 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
     }
 
     $scope.deleteProdSelected = function(){
-        $scope.listaSubitem.splice($scope.selectedProd,1);
+        console.log("pos del: " + $scope.selectedProdRow);
+        $scope.listaSubitem.splice($scope.selectedProdRow,1);
     }
 
 
@@ -293,7 +294,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 numero_factura: $scope.obj.numero_factura,
                 fecha_factura: $scope.obj.fecha_factura,
                 hora_orden: $scope.obj.hora_orden,
-                minutos_orden : $scope.minutos_orden,
+                minutos_orden : $scope.obj.minutos_orden,
                 direccion : $scope.obj.direccion,
                 observacion : $scope.obj.observacion,
                 estado : $scope.obj.estado,
@@ -347,15 +348,17 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
             },
             data:{
                 id :$scope.id,
-                id_cliente: $scope.selected.id_cliente,
-                fecha_orden: $scope.selected.fecha_orden,
-                numero_factura: $scope.selected.numero_factura,
-                fecha_factura: $scope.selected.fecha_factura,
-                hora_orden: $scope.selected.hora_orden,
-                direccion : $scope.selected.direccion,
-                observacion : $scope.selected.observacion,
-                estado : $scope.selected.estado,
-                productos: $scope.selected.listaSubitemBD
+                id_cliente: $scope.obj.id_cliente,
+                codigo: $scope.obj.codigo,
+                fecha_orden: $scope.obj.fecha_orden,
+                numero_factura: $scope.obj.numero_factura,
+                fecha_factura: $scope.obj.fecha_factura,
+                hora_orden: $scope.obj.hora_orden,
+                minutos_orden : $scope.obj.minutos_orden,
+                direccion : $scope.obj.direccion,
+                observacion : $scope.obj.observacion,
+                estado : $scope.obj.estado,
+                productos: $scope.listaSubitemBD
             }
         }).then(function successCallback(response) {
             $scope.obj = {
