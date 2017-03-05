@@ -3,7 +3,7 @@
 
 
 // Declare app level module which depends on views, and components
-var app = angular.module("myApp", ['ngStorage','ngRoute']);
+var app = angular.module("myApp", ['ngStorage','ngRoute','angularUtils.directives.dirPagination']);
 
 
 function ApiUrl(){

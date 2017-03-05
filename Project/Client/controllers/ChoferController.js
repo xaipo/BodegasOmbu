@@ -32,6 +32,7 @@ app.controller('ChoferController', ['$scope', '$http', '$location', 'myProvider'
             }
         }).then(function successCallback(response) {
             var n = response.data.length;
+            $scope.lista = [];
             if (n == 0) {
                 alert('no se encontro informacion');
             } else {

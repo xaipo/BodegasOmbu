@@ -9,14 +9,13 @@
     <link rel="stylesheet" type="text/css" href="./css/OverrideComponents.css" id="pageshee1"/>
     <link rel="stylesheet" type="text/css" href="./css/datepicker.css" id="pageshee3"/>
     <link rel="stylesheet" type="text/css" href="./font-awesome-4.7.0/css/font-awesome.min.css" id="pageshee4"/>
-
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css" id="pageshee5">
     <!-----angular-->
 
     <script src="./angular-1.4.6/angular.js"></script>
     <script src="./angular-1.4.6/angular-route.js"></script>
     <script src="./angular-1.4.6/ngStorage.min.js"></script>
     <script src="./app.js"></script>
-
 
     <script src="./controllers/LoginController.js"></script>
     <script src="./controllers/ChoferController.js"></script>
@@ -36,8 +35,8 @@
 <script src="./scripts/bootstrap.min.js"></script>
 <script src="./scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
 <script src="./scripts/bootstrap-datepicker.js"></script>
-
-
+<script src="./scripts/dataTable.min.js"></script>
+<script src="./bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
 <script>
 
     $(function(){
@@ -151,14 +150,18 @@
                 <br>
                 <!-- Inicio de la tabla-->
                 <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <table class="table table-hover">
+                    <div class="col-md-12 col-xs-12"  >
+                        <table class="table table-hover"
+                               data-sort-name="Cedula" >
+
+
+
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Cedula</th>
-                                <th>Nombre</th>
-                                <th>Telefono</th>
+                                <th >#</th>
+                                <th >Cedula</th>
+                                <th >Nombre</th>
+                                <th >Telefono</th>
 
                             </tr>
 
@@ -168,20 +171,20 @@
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
 
-                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:2" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)"><!--aqui habia ng-repeat-->
                                 <td>{{$index}}</td>
                                 <td>{{ item.cedula }}</td>
                                 <td>{{ item.nombre }}</td>
                                 <td>{{ item.telefono }}</td>
 
                             </tr>
-
+                            <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- botones de paginacion-->
+            <!-- botones de paginacion borrar-->
             <div class="row">
                 <div class="col-md-3 col-xs-1"></div>
                 <div class="col-md-3 col-xs-5">
@@ -295,7 +298,17 @@
     </form>
 </div>
 
-
+<script>
+    function queryParams() {
+        return {
+            type: 'owner',
+            sort: 'updated',
+            direction: 'desc',
+            per_page: 100,
+            page: 1
+        };
+    }
+</script>
 
 </body>
 </html>

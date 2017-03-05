@@ -36,6 +36,7 @@ $scope.user.pass=SHA1($scope.user.pass);
 //console.log($scope.user.pass);
 
 $scope.user.password=
+    $scope.us = JSON.parse(window.localStorage.getItem('se'));
     $http({
         method: 'POST',
         url: myProvider.getLogin(),
@@ -66,10 +67,10 @@ $scope.user.password=
             //console.log(response.data.value);
             //console.log(resp);
             var obj= response.data;
-            //console.log(obj);
-            window.localStorage.setItem("se", JSON.stringify(response.data.value.tk));
+            console.log(obj.value.tk);
+            window.localStorage.setItem("se", JSON.stringify(obj.value.tk));
             window.localStorage.setItem("usuario", JSON.stringify(resp));
-            window.location ='./index.html';
+           window.location ='./index.html';
         }
 
 
@@ -88,10 +89,15 @@ $scope.user.password=
 
 
 
-    $scope.logout=function(){
+      $scope.logout=function(){
 
         localStorage.removeItem('se');
         localStorage.removeItem('usuario');
+        window.location ='./login.html';
+          $scope.us = JSON.parse(window.localStorage.getItem('usuario'));4
+          //llamar a un post para actualizar el usuario y eliminar el token
+
+
 
     }
 
