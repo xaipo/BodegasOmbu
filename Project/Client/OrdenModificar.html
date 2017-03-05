@@ -194,10 +194,12 @@
 
                         <div class="row">
                             <div class="col-md-3 col-xs-0">
-                                <h5>Estado</h5>
-                                <select   class="form-control" single ng-model="selected.estado">
-                                    <option value=0>Por Entregar </option>
-                                    <option value=1>Entregado</option>
+                                <h5>Estado {{selected.estado}}</h5>
+
+                                <select  class="form-control"  ng-model="selected.estado" single >
+                                    <option value="0">Por Entregar</option>
+                                    <option value="1">Asignado Entrega</option>
+                                    <option value="2">Entregado</option>
                                 </select><br>
                             </div>
                             <div class="col-md-3 col-xs-0">
@@ -211,7 +213,6 @@
                             </div>
 
                         </div>
-
 
 
 
