@@ -139,7 +139,7 @@
                     <div class="col-md-2 col-xs-4">
                         <br>
 
-                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal">
+                        <button class="form-control" type="button" ng-click="redirectIngresar()">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
@@ -153,7 +153,9 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
+                                <th>Orden</th>
                                 <th>Id_Cliente</th>
                                 <th>Fecha Orden</th>
                                 <th>Numero de Factura</th>
@@ -161,26 +163,55 @@
                                 <th>Direccion</th>
                                 <th>Observacion</th>
                                 <th>Estado</th>
-                                <th>Lista de Productos</th>
-
+                                <th></th>
                             </tr>
 
 
 
                             </thead>
-                            <tbody data-toggle="modal" data-target="#myModal2">
+                            <tbody >
 
-                                <tr ng-repeat="item in lista | filter:search | orderBy:item.id_cliente" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                                <tr ng-repeat-start="item in lista | filter:search | orderBy:item.id_cliente" ng-class="{'selected':$index == selectedRow}" >
+
+                                    <td><button ng-if="item.expanded" ng-click="item.expanded = false"></button>
+                                        <button ng-if="!item.expanded" ng-click="item.expanded = true"></button>
+                                    </td>
+
                                     <td>{{$index}}</td>
-                                    <td>{{ item.id_cliente }}</td>
+                                    <td>{{ item.codigo }}</td>
+                                    <td>{{ item.nombre_cliente }}</td>
                                     <td>{{ item.fecha_orden }}</td>
                                     <td>{{ item.numero_factura }}</td>
                                     <td>{{ item.hora_orden }} : {{item.minutos_orden}}</td>
                                     <td>{{ item.direccion }}</td>
                                     <td>{{ item.observacion }}</td>
                                     <td>{{ item.estado }}</td>
-                                    <td>{{ item.productos }}</td>
+                                    <td> <button type="button" class="btn btn-default form-control " ng-click="redirectModificar($index,item)">Modificar</button></td>
 
+
+                                </tr>
+
+                                <tr ng-if="item.expanded" ng-repeat-end="">
+                                    <td colspan="11">
+                                        <b>Productos:</b>
+
+                                        <ul style="list-style:none">
+
+                                            <li ng-repeat="itemPr in item.productos">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-xs-6">
+                                                        {{itemPr.nombre_producto}}
+                                                    </div>
+                                                    <div class="col-md-3 col-xs-6"><b>CANTIDAD:</b> {{itemPr.cantidad}}</div>
+
+                                                </div>
+
+
+                                            </li>
+
+                                        </ul>
+
+                                    </td>
                                 </tr>
 
                             </tbody>

@@ -195,9 +195,9 @@
                         <div class="row">
                             <div class="col-md-3 col-xs-0">
                                 <h5>Estado</h5>
-                                <select name="TipoCie"  class="form-control"single>
-                                    <option value="0">Por Entregar </option>
-                                    <option value="1">Entregado</option>
+                                <select   class="form-control" single ng-model="obj.estado">
+                                    <option value=0>Por Entregar </option>
+                                    <option value=1>Entregado</option>
                                 </select><br>
                             </div>
                             <div class="col-md-3 col-xs-0">
@@ -297,6 +297,14 @@
                                 <br/>
                                 <br/>
                                 <button type="button" class="btn btn-default form-control" ng-click="save()">Guardar</button>
+                            </div>
+
+                            <div class="col-md-2 col-xs-5">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <button type="button" class="btn btn-default form-control" ng-click="redirectOrdenes()">Cerrar</button>
                             </div>
 
                         </div>

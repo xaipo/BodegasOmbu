@@ -50,6 +50,7 @@ router.post('/updateDelivery',function(req,res){
         }
 
         var item = {
+            codigo: req.body.codigo,
             id_vehiculo: req.body.id_vehiculo,
             id_chofer: req.body.id_chofer,
             fecha: req.body.fecha,

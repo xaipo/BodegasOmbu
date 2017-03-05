@@ -53,6 +53,7 @@ router.post('/updateOrden',function(req,res){
 
         var item = {
             id_cliente: req.body.id_cliente,
+            codigo: req.body.codigo,
             fecha_orden: req.body.fecha_orden,
             numero_factura: req.body.numero_factura,
             fecha_factura: req.body.fecha_factura,

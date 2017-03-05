@@ -485,10 +485,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 //funcion que llama a un web services cuando inicializa la pagina
 
     $scope.inicializar = function () {
-
-
         $scope.lista = [];
-
         $http({
             method: 'GET',
             url: myProvider.getDelivery() + '/getAllDelivery',
