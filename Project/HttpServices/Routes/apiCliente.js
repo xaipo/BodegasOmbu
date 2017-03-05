@@ -16,6 +16,8 @@ router.post('/saveCliente',function(req,res){
         assert.equal(null, err);
 
         console.log(req.body);
+
+        ///si existe el token
         var collection =db.collection('cliente');
         collection.insert(req.body, {
 

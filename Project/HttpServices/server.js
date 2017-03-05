@@ -265,6 +265,7 @@ app.use('/api',require('./Routes/apiChofer'));
 app.use('/api',require('./Routes/apiOrden'));
 app.use('/api',require('./Routes/apiDelivery'));
 app.use('/api',require('./Routes/apiFechaSistema'));
+app.use('/api',require('./Routes/apiReports'));
 // </editor-fold >
 
 // <editor-fold defaultstate="collapsed" desc="Server Run">

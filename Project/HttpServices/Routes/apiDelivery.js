@@ -6,7 +6,7 @@ var router= express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 var assert = require('assert');
-var url = 'mongodb://localhost:27017/OmbuDelivery';
+var url = 'mongodb://192.168.1.101:27017/OmbuDelivery';
 
 
 
@@ -113,5 +113,27 @@ router.get('/getAllDelivery',function(req,res){
 
     });
 });
+router.post('/getByVehiculoAndFechaDelivery',function(req,res){
 
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        //console.log(req.body);
+
+        var id_vehiculo = req.body.id_vehiculo.toString();
+        console.log(id_vehiculo);
+        db.collection('delivery').find({"id_vehiculo": id_vehiculo}).toArray(function(err, results){
+            console.log(results); // output all records
+            res.send(results);
+        });
+        //var fecha = req.body.fecha;
+      //  db.collection('delivery').find({"id_vehiculo": id_vehiculo}, function(err, result) {
+          //  assert.equal(null, err);
+           // console.log(result);
+           // console.log('Item loaded');
+
+        //});
+
+        db.close();
+    });
+});
 module.exports=router;
