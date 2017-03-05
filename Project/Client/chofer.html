@@ -171,7 +171,7 @@
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
 
-                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:2" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)"><!--aqui habia ng-repeat-->
+                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:10" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)"><!--aqui habia ng-repeat-->
                                 <td>{{$index}}</td>
                                 <td>{{ item.cedula }}</td>
                                 <td>{{ item.nombre }}</td>
@@ -185,22 +185,7 @@
                 </div>
             </div>
             <!-- botones de paginacion borrar-->
-            <div class="row">
-                <div class="col-md-3 col-xs-1"></div>
-                <div class="col-md-3 col-xs-5">
 
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-left"></button>
-                    <br> <br>
-
-
-                </div>
-                <div class="col-md-3 col-xs-5">
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-right"></button>
-                    <br> <br>
-                </div>
-
-            </div>
-        </div>
 
         <!-- modal en el click para modificar-->
 

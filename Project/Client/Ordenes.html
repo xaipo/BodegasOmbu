@@ -35,6 +35,8 @@
 <script src="./scripts/bootstrap.min.js"></script>
 <script src="./scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
 <script src="./scripts/bootstrap-datepicker.js"></script>
+<script src="./bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
+
 
 
 <script>
@@ -153,7 +155,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th></th>
+
                                 <th>#</th>
                                 <th>Orden</th>
                                 <th>Id_Cliente</th>
@@ -171,11 +173,7 @@
                             </thead>
                             <tbody >
 
-                                <tr ng-repeat-start="item in lista | filter:search | orderBy:item.id_cliente" ng-class="{'selected':$index == selectedRow}" >
-
-                                    <td><button ng-if="item.expanded" ng-click="item.expanded = false"></button>
-                                        <button ng-if="!item.expanded" ng-click="item.expanded = true"></button>
-                                    </td>
+                                <tr dir-paginate="item in lista | filter:search | itemsPerPage:10 | orderBy:'-codigo' " ng-class="{'selected':$index == selectedRow}" >
 
                                     <td>{{$index}}</td>
                                     <td>{{ item.codigo }}</td>
@@ -190,29 +188,9 @@
 
 
                                 </tr>
-
-                                <tr ng-if="item.expanded" ng-repeat-end="">
-                                    <td colspan="11">
-                                        <b>Productos:</b>
-
-                                        <ul style="list-style:none">
-
-                                            <li ng-repeat="itemPr in item.productos">
-                                                <div class="row">
-                                                    <div class="col-md-3 col-xs-6">
-                                                        {{itemPr.nombre_producto}}
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-6"><b>CANTIDAD:</b> {{itemPr.cantidad}}</div>
-
-                                                </div>
+                                <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
 
 
-                                            </li>
-
-                                        </ul>
-
-                                    </td>
-                                </tr>
 
                             </tbody>
                         </table>
@@ -220,21 +198,7 @@
                 </div>
             </div>
             <!-- botones de paginacion-->
-            <div class="row">
-                <div class="col-md-3 col-xs-1"></div>
-                <div class="col-md-3 col-xs-5">
 
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-left"></button>
-                    <br> <br>
-
-
-                </div>
-                <div class="col-md-3 col-xs-5">
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-right"></button>
-                    <br> <br>
-                </div>
-
-            </div>
         </div>
 
         <!-- modal en el click para modificar-->

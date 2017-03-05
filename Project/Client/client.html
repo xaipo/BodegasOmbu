@@ -36,6 +36,8 @@
 <script src="./scripts/bootstrap.min.js"></script>
 <script src="./scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
 <script src="./scripts/bootstrap-datepicker.js"></script>
+<script src="./bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
+
 
 
 <script>
@@ -159,7 +161,7 @@
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
 
-                            <tr ng-repeat="item in lista | filter:search | orderBy:item.cedula" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:10 | orderBy:item.cedula" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
                                 <td>{{$index}}</td>
                                 <td>{{ item.cedula }}</td>
                                 <td>{{ item.nombre }}</td>
@@ -168,6 +170,8 @@
                                 <td>{{ item.direccion }}</td>
 
                             </tr>
+                            <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
+
 
 
                             </tbody>
@@ -176,21 +180,7 @@
                 </div>
             </div>
             <!-- botones de paginacion-->
-            <div class="row">
-                <div class="col-md-3 col-xs-1"></div>
-                <div class="col-md-3 col-xs-5">
 
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-left"></button>
-                    <br> <br>
-
-
-                </div>
-                <div class="col-md-3 col-xs-5">
-                    <button type="button" class="btn btn-default form-control fa fa-arrow-right"></button>
-                    <br> <br>
-                </div>
-
-            </div>
         </div>
 
         <!-- modal en el click para nuevo-->
