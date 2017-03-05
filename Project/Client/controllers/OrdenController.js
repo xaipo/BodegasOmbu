@@ -122,7 +122,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         $scope.subItem.id_producto = $scope.objProducto._id;
         $scope.subItem.nombre_producto = $scope.objProducto.nombre;
         $scope.subItem.peso_unit = $scope.objProducto.peso;
-        $scope.subItem.estado = 0;
+        $scope.subItem.estado = "0";
 
         $scope.listaSubitem.push($scope.subItem);
         $scope.subItem ={
@@ -270,6 +270,9 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
     $scope.inicializarUpdate = function (){
 
+
+
+
         $scope.cargaClientesProductos();
         $scope.id = JSON.parse(window.localStorage.getItem('id_orden'));
         $scope.selected._id = JSON.parse(window.localStorage.getItem('id_orden'));
@@ -300,6 +303,9 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
                 $scope.selected.fecha_orden =  new Date( $scope.selected.fecha_orden);
                 $scope.selected.fecha_factura =  new Date( $scope.selected.fecha_factura);
+
+                document.getElementById('fechaOrden').value=$scope.selected.fecha_orden;
+                document.getElementById('fechaFactura').value=$scope.selected.fecha_factura;
 
                 promiseClienteById($scope.selected);
 
@@ -360,6 +366,10 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         }
 
 
+
+
+
+
         $http({
             method: 'POST',
             url: myProvider.getOrden() + '/saveOrden',
@@ -410,7 +420,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         }, function errorCallback(response) {
             console.log('falla');
         });
-
+        //window.location ='Ordenes.html';
     }
 
 
@@ -478,7 +488,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
             console.log('falla');
         });
 
-        window.location ='Ordenes.html';
+        //window.location ='Ordenes.html';
     }
 
 

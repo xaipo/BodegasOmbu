@@ -90,6 +90,22 @@ router.post('/getByIdDelivery',function(req,res){
     });
 });
 
+router.post('/getByVehiculoAndFechaDelivery',function(req,res){
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        //console.log(req.body);
+
+        var id_vehiculo = req.body.id_vehiculo;
+        console.log(id_vehiculo);
+        db.collection('delivery').find({"id_vehiculo": id_vehiculo}).toArray(function(err, results){
+            console.log(results); // output all records
+            res.send(results);
+        });
+        db.close();
+    });
+});
+
 
 router.get('/getAllDelivery',function(req,res){
 
@@ -120,8 +136,9 @@ router.post('/getByVehiculoAndFechaDelivery',function(req,res){
         //console.log(req.body);
 
         var id_vehiculo = req.body.id_vehiculo.toString();
+        var fecha = req.body.fecha;
         console.log(id_vehiculo);
-        db.collection('delivery').find({"id_vehiculo": id_vehiculo}).toArray(function(err, results){
+        db.collection('delivery').find({"id_vehiculo": id_vehiculo, "fecha":fecha}).toArray(function(err, results){
             console.log(results); // output all records
             res.send(results);
         });
