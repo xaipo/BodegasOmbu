@@ -139,7 +139,7 @@
                     <div class="col-md-2 col-xs-4">
                         <br>
 
-                        <button class="form-control" type="button" data-toggle="modal" data-target="#myModal">
+                        <button class="form-control" type="button" ng-click="redirectIngresar()">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
@@ -185,7 +185,7 @@
                                 <td>{{ item.hora_inicio }} : {{item.minutos_inicio}}</td>
                                 <td>{{ item.hora_retorno }} : {{item.minutos_retorno}}</td>
                                 <td>{{ item.estado }}</td>
-                                <td> <button type="button" class="btn btn-default form-control " ng-click="setClickedRow($index,item)">Modificar</button></td>
+                                <td> <button type="button" class="btn btn-default form-control " ng-click="redirectModificar($index,item)">Modificar</button></td>
 
                             </tr>
                             <tr ng-if="item.expanded" ng-repeat-end="">

@@ -49,14 +49,14 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
          cantidad : 0,
          peso_unit:0,
          peso_total : 0,
-         estado : 0
+         estado : '0'
     };
 
     $scope.subItemBD ={
         id_producto : '',
         cantidad : 0,
         peso_total : 0,
-        estado : 0
+        estado : '0'
     };
     $scope.listaSubitemBD= [];
 
@@ -72,15 +72,33 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         minutos_orden:0,
         direccion : '',
         observacion : '',
-        estado : 0,
+        estado : '0',
         productos: []
     };
+
+    $scope.redirectOrdenes=function(){
+        window.location ='Ordenes.html';
+    }
+    $scope.redirectIngresar=function(){
+        window.location ='OrdenIngresar.html';
+    }
+    $scope.redirectModificar=function(index, item){
+
+        window.localStorage.setItem("id_orden", JSON.stringify(item._id));
+        window.location ='OrdenModificar.html';
+    }
 
 
     $scope.changeTypeCliente=function(){
         console.log($scope.objCliente);
         $scope.objCliente=JSON.parse($scope.objClienteSelect);
         $scope.obj.id_cliente=$scope.objCliente._id;
+    }
+
+    $scope.changeTypeClienteUpdate=function(){
+        console.log($scope.objCliente);
+        $scope.objCliente=JSON.parse($scope.objClienteSelect);
+        $scope.selected.id_cliente=$scope.objCliente._id;
     }
 
     $scope.changeTypeProducto=function(){
@@ -150,8 +168,8 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 alert('no se encontro informacion');
             } else {
                 for (var i = 0; i < n; i++) {
-                    $scope.aux = response.data[i];
-                    $scope.listaClientes.push($scope.aux);
+                    var aux = response.data[i];
+                    $scope.listaClientes.push(aux);
                 }
 
 
@@ -212,8 +230,33 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 alert('no se encontro informacion');
             } else {
                 for (var i = 0; i < n; i++) {
-                    $scope.aux = response.data[i];
-                    $scope.lista.push($scope.aux);
+                    var aux = response.data[i];
+
+                    aux.fecha_orden =  new Date(aux.fecha_orden);
+                    aux.fecha_factura =  new Date(aux.fecha_factura);
+
+                    promiseClienteById(aux);
+
+                    // PROMESA ASINCRONA getProductosOrdenById tabla producto**************************************************
+                    aux.productos.reduce(
+                        function (sequence, value) {
+                            return sequence.then(function() {
+                                return promiseProductoOrdenById(value);
+                            }).then(function(obj) {
+
+                                console.log('END producto with value =', obj.value,
+                                    'and result =', obj.result);
+                            });
+                        },
+                        Promise.resolve()
+                    ).then(function() {
+                            console.log('COMPLETED');
+                        });
+                    //  ************************************************************************************************
+
+
+
+                    $scope.lista.push(aux);
                 }
                 console.log($scope.lista);
             }
@@ -225,10 +268,16 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
     }
 
 
-    $scope.setClickedRow = function (index, item){
+    $scope.inicializarUpdate = function (){
 
-        $scope.id = item._id;
-        $scope.selectedRow = index;
+        $scope.cargaClientesProductos();
+        $scope.id = JSON.parse(window.localStorage.getItem('id_orden'));
+        $scope.selected._id = JSON.parse(window.localStorage.getItem('id_orden'));
+
+
+
+        //$scope.id = item._id;
+        //$scope.selectedRow = index;
 
         console.log($scope.id);
         $http({
@@ -248,7 +297,38 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 alert('no se encontro informacion');
             } else {
                 $scope.selected = response.data;
-                console.log($scope.selected);
+
+                $scope.selected.fecha_orden =  new Date( $scope.selected.fecha_orden);
+                $scope.selected.fecha_factura =  new Date( $scope.selected.fecha_factura);
+
+                promiseClienteById($scope.selected);
+
+                getClienteByIdFullData($scope.selected.id_cliente);
+
+
+                // PROMESA ASINCRONA getProductosOrdenById tabla producto**************************************************
+                $scope.selected.productos.reduce(
+                    function (sequence, value) {
+                        return sequence.then(function() {
+                            return promiseProductoOrdenById(value);
+                        }).then(function(obj) {
+
+                            console.log('END producto with value =', obj.value,
+                                'and result =', obj.result);
+                        });
+                    },
+                    Promise.resolve()
+                ).then(function() {
+                        console.log('COMPLETED');
+                    });
+                //  ************************************************************************************************
+
+
+                $scope.listaSubitem = ($scope.selected.productos) ;
+
+
+
+                console.log("SELECTEDsssss: " +angular.toJson($scope.selected));
             }
         }, function errorCallback(response) {
             console.log('entra');
@@ -339,6 +419,26 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         $scope.id = $scope.selected._id;
         console.log($scope.selected);
 
+
+        $scope.listaSubitemBD=[];
+        for(var i=0; i<$scope.listaSubitem.length; i++){
+
+            $scope.subItemBD ={
+                id_producto : '',
+                cantidad : 0,
+                peso_total : 0,
+                estado : 0
+            };
+
+            $scope.subItemBD.id_producto = $scope.listaSubitem[i].id_producto;
+            $scope.subItemBD.cantidad = $scope.listaSubitem[i].cantidad;
+            $scope.subItemBD.peso_total = $scope.listaSubitem[i].peso_total;
+            $scope.subItemBD.estado = $scope.listaSubitem[i].estado;
+
+            $scope.listaSubitemBD.push($scope.subItemBD);
+        }
+
+
         console.log('ENTRA1');
         $http({
             method: 'POST',
@@ -348,16 +448,16 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
             },
             data:{
                 id :$scope.id,
-                id_cliente: $scope.obj.id_cliente,
-                codigo: $scope.obj.codigo,
-                fecha_orden: $scope.obj.fecha_orden,
-                numero_factura: $scope.obj.numero_factura,
-                fecha_factura: $scope.obj.fecha_factura,
-                hora_orden: $scope.obj.hora_orden,
-                minutos_orden : $scope.obj.minutos_orden,
-                direccion : $scope.obj.direccion,
-                observacion : $scope.obj.observacion,
-                estado : $scope.obj.estado,
+                id_cliente: $scope.selected.id_cliente,
+                codigo: $scope.selected.codigo,
+                fecha_orden: $scope.selected.fecha_orden,
+                numero_factura: $scope.selected.numero_factura,
+                fecha_factura: $scope.selected.fecha_factura,
+                hora_orden: $scope.selected.hora_orden,
+                minutos_orden : $scope.selected.minutos_orden,
+                direccion : $scope.selected.direccion,
+                observacion : $scope.selected.observacion,
+                estado : $scope.selected.estado,
                 productos: $scope.listaSubitemBD
             }
         }).then(function successCallback(response) {
@@ -372,11 +472,138 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 estado : '',
                 productos: []
             };
-            $scope.inicializar();
+            $scope.inicializarUpdate();
             console.log('POST');
         }, function errorCallback(response) {
             console.log('falla');
         });
+
+        window.location ='Ordenes.html';
     }
+
+
+
+
+    //PROMISES *********************************************************************************************************
+    function promiseClienteById(value){
+        return new Promise(function (fulfill, reject){
+            console.log('START cliente with value =', value);
+            setTimeout(function() {
+
+                $http({
+
+                    method: 'POST',
+                    url: myProvider.getCliente() + '/getByIdCliente',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data :{id :value.id_cliente}
+
+
+                }).then(function successCallback(response) {
+                    var n = response.data.length;
+                    if (n == 0) {
+                        alert('no se encontro informacion CLIENTE '+ value.id_cliente);
+                    } else {
+
+                        value.nombre_cliente = response.data.nombre;
+
+                    }
+                }, function errorCallback(response) {
+                    console.log('entra');
+
+                });
+
+                fulfill({ value: value, result: value });
+            }, 0 | Math.random() * 100);
+        });
+    }
+
+
+
+
+
+    function promiseProductoOrdenById(value){
+        return new Promise(function (fulfill, reject){
+            console.log('START OrdenProducto with value =', value);
+            setTimeout(function() {
+
+                //var aa = $scope.getProductoById(value.id_producto);
+
+                $http({
+
+                    method: 'POST',
+                    url: myProvider.getProducto() + '/getByIdProducto',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data :{id :value.id_producto}
+
+
+                }).then(function successCallback(response) {
+                    var n = response.data.length;
+                    if (n == 0) {
+                        alert('no se encontro informacion');
+                    } else {
+
+                        value.nombre_producto = response.data.nombre;
+                        value.peso_unit = response.data.peso;
+
+                    }
+                }, function errorCallback(response) {
+                    console.log('entra');
+                    //  Console.log(response);
+                    //$scope.mesaje = response.mensaje;
+
+                });
+
+
+
+                fulfill({ value: value, result: value });
+            }, 0 | Math.random() * 100);
+        });
+    }
+    //******************************************************************************************************************
+
+    //FUNCIONES WITH OUT PROMISES *********************************************************************************************************
+    function getClienteByIdFullData(id){
+
+        var id_cl = id;
+
+
+        console.log($scope.id);
+        $http({
+
+            method: 'POST',
+            url: myProvider.getCliente() + '/getByIdCliente',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data :{id : id_cl}
+
+
+        }).then(function successCallback(response) {
+            var n = response.data.length;
+            if (n == 0) {
+                alert('no se encontro informacion');
+            } else {
+                $scope.objClienteSelect = response.data;
+                $scope.objCliente = response.data;
+
+
+                console.log($scope.objClienteSelect);
+            }
+        }, function errorCallback(response) {
+            console.log('entra');
+            //  Console.log(response);
+            $scope.mesaje = response.mensaje;
+
+        });
+    }
+
+    //******************************************************************************************************************
 
 }]);
