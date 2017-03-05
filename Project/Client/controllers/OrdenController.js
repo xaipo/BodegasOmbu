@@ -49,14 +49,14 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
          cantidad : 0,
          peso_unit:0,
          peso_total : 0,
-         estado : 0
+         estado : '0'
     };
 
     $scope.subItemBD ={
         id_producto : '',
         cantidad : 0,
         peso_total : 0,
-        estado : 0
+        estado : '0'
     };
     $scope.listaSubitemBD= [];
 
@@ -72,7 +72,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         minutos_orden:0,
         direccion : '',
         observacion : '',
-        estado : 0,
+        estado : '0',
         productos: []
     };
 
@@ -328,7 +328,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
 
 
-                console.log("SELECTEDsssss: " +angular.toJson($scope.listaSubitem));
+                console.log("SELECTEDsssss: " +angular.toJson($scope.selected));
             }
         }, function errorCallback(response) {
             console.log('entra');

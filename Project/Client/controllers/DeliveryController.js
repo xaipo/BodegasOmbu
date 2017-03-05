@@ -69,7 +69,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         minutos_orden:0,
         direccion : '',
         observacion : '',
-        estado : 0,
+        estado : '0',
         productos: [],
 
         nombre_cliente:'',
@@ -80,7 +80,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         id_producto : '',
         cantidad : 0,
         peso_total : 0,
-        estado : 0,
+        estado : '0',
 
         nombre_producto:''
     };
@@ -96,7 +96,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         minutos_orden:0,
         direccion : '',
         observacion : '',
-        estado : 0,
+        estado : '0',
         productos: [],
 
         nombre_cliente:''
@@ -106,7 +106,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         id_producto : '',
         cantidad : 0,
         peso_total : 0,
-        estado : 0,
+        estado : '0',
 
         nombre_producto:''
     };
@@ -137,7 +137,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         minutos_inicio:0,
         hora_retorno:0,
         minutos_retorno:0,
-        estado:0,
+        estado:'0',
         ordenes :[]
     };
 
@@ -150,6 +150,19 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     $scope.objSubOrdenProducto={
         id_producto:''
     };
+
+
+    $scope.redirectLogisticaEntregas=function(){
+        window.location ='LogisticaEntregas.html';
+    }
+    $scope.redirectIngresar=function(){
+        window.location ='LogisticaEntregaIngresar.html';
+    }
+    $scope.redirectModificar=function(index, item){
+
+        window.localStorage.setItem("id_delivery", JSON.stringify(item._id));
+        window.location ='LogisticaEntregaModificar.html';
+    }
 
 
     $scope.changeTypeVehiculo=function(){
@@ -260,9 +273,12 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 }
                 i++;
             }
+
             $scope.objOrden='';
             $scope.listaProductoOrden = [];
             $scope.objProductoOrden = '';
+
+            console.log("break 1: "+ angular.toJson($scope.listaOrdenesTarget));
         }
     }
 
@@ -330,16 +346,16 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
     $scope.quitarOrdenTarget= function () {
         if($scope.objOrdenSelectTarget!=''){
-            $scope.auxOrden=JSON.parse($scope.objOrdenSelectTarget);
+            var auxOrden=JSON.parse($scope.objOrdenSelectTarget);
             var control = false;
             var n = $scope.listaOrdenes.length;
             var i=0;
             while(i<n){
-                if($scope.listaOrdenes[i]._id==$scope.auxOrden._id){
-                    var m = $scope.auxOrden.productos.length;
+                if($scope.listaOrdenes[i]._id==auxOrden._id){
+                    var m = auxOrden.productos.length;
                     for(var j=0; j<m; j++){
-                        $scope.auxOrden.productos[j].estado = 0;//estado 0:pendiente 1:asignado 2:entregado
-                        $scope.listaOrdenes[i].productos.push($scope.auxOrden.productos[j]);
+                        auxOrden.productos[j].estado = 0;//estado 0:pendiente 1:asignado 2:entregado
+                        $scope.listaOrdenes[i].productos.push(auxOrden.productos[j]);
                     }
                     i=n;
                     control = true;
@@ -348,18 +364,18 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             };
 
             if(!control){
-                var m1 = $scope.auxOrden.productos.length;
+                var m1 = auxOrden.productos.length;
                 for(var j1=0; j1<m1; j1++){
-                    $scope.auxOrden.productos[j1].estado = 0;//estado 0:pendiente 1:asignado 2:entregado
+                    auxOrden.productos[j1].estado = 0;//estado 0:pendiente 1:asignado 2:entregado
                 }
-                $scope.listaOrdenes.push($scope.auxOrden);
+                $scope.listaOrdenes.push(auxOrden);
             }
 
 
             var nn = $scope.listaOrdenesTarget.length;
             var ii=0;
             while(ii<nn) {
-                if($scope.listaOrdenesTarget[ii]._id == $scope.auxOrden._id){
+                if($scope.listaOrdenesTarget[ii]._id == auxOrden._id){
                     $scope.listaOrdenesTarget.splice(ii,1);
                     ii=nn;
                 }
@@ -535,10 +551,15 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     };
 
 
-    $scope.setClickedRow = function (index, item){
+    $scope.inicializarUpdate = function (){
 
-        $scope.id = item._id;
-        $scope.selectedRow = index;
+        $scope.cargaVehiculosChoferesOrdenes();
+        $scope.id = JSON.parse(window.localStorage.getItem('id_delivery'));
+        $scope.obj._id = JSON.parse(window.localStorage.getItem('id_delivery'));
+
+
+        //$scope.id = item._id;
+        //$scope.selectedRow = index;
 
         console.log($scope.id);
         $http({
@@ -555,10 +576,43 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         }).then(function successCallback(response) {
             var n = response.data.length;
             if (n == 0) {
-                alert('no se encontro informacion');
+                alert('no se encontro informacion ORDEN');
             } else {
-                $scope.selected = response.data;
-                console.log($scope.selected);
+                $scope.obj = response.data;
+
+                $scope.obj.fecha =  new Date($scope.obj.fecha);
+
+                $scope.objVehiculo._id = response.data.id_vehiculo;
+                $scope.objChofer._id = response.data.id_chofer;
+
+
+                promiseVehiculoByIdLoadUpdate($scope.objVehiculo);
+                promiseChoferByIdLoadUpdate( $scope.objChofer);
+
+                $scope.listaOrdenesTarget = response.data.ordenes;
+
+                // PROMESA ASINCRONA getOrdenById tabla ORDEN*******************************************************
+                $scope.listaOrdenesTarget.reduce(
+                    function (sequence, value) {
+                        return sequence.then(function() {
+                            return promiseOrdenById(value);
+                        }).then(function(obj) {
+
+
+                            value._id = value.id_orden;
+
+                            console.log('END Ordenes Target with value =', obj.value,
+                                'and result =', obj.result);
+                        });
+                    },
+                    Promise.resolve()
+                ).then(function() {
+                        console.log('COMPLETED ordenes: ');
+                    });
+                //  ************************************************************************************************
+
+
+                console.log("objeto target: "+ angular.toJson($scope.listaOrdenesTarget));
             }
         }, function errorCallback(response) {
             console.log('entra');
@@ -571,17 +625,17 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
     $scope.save = function (){
 
-        //$scope.obj.ordenes = $scope.listaOrdenesTarget;
+
         var n = $scope.listaOrdenesTarget.length;
         for(var i=0; i<n; i++){
-            $scope.aux = {
+            var aux = {
                 id_orden:'',
                 tiempo_estimado_carga_descarga:0
             };
-            $scope.aux.id_orden = $scope.listaOrdenesTarget[i]._id;
-            $scope.aux.tiempo_estimado_carga_descarga = $scope.listaOrdenesTarget[i].tiempo_estimado_carga_descarga;
+            aux.id_orden = $scope.listaOrdenesTarget[i]._id;
+            aux.tiempo_estimado_carga_descarga = $scope.listaOrdenesTarget[i].tiempo_estimado_carga_descarga;
 
-            $scope.obj.ordenes.push($scope.aux);
+            $scope.obj.ordenes.push(aux);
         };
 
 
@@ -651,13 +705,48 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             console.log('falla');
         });
 
+        window.location ='LogisticaEntregas.html';
+
     }
 
 
     $scope.update = function (){
 
-        $scope.id = $scope.selected._id;
-        console.log($scope.selected);
+        $scope.id = $scope.obj._id;
+        console.log($scope.obj);
+
+        $scope.obj.ordenes=[];
+        var n = $scope.listaOrdenesTarget.length;
+        for(var i=0; i<n; i++){
+            var aux = {
+                id_orden:'',
+                tiempo_estimado_carga_descarga:0
+            };
+            aux.id_orden = $scope.listaOrdenesTarget[i]._id;
+            aux.tiempo_estimado_carga_descarga = $scope.listaOrdenesTarget[i].tiempo_estimado_carga_descarga;
+
+            $scope.obj.ordenes.push(aux);
+        };
+
+        console.log("break 2: " + angular.toJson($scope.obj.ordenes));
+
+        // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+        $scope.listaOrdenesTarget.reduce(
+            function (sequence, value) {
+                return sequence.then(function() {
+                    return promiseUpdateProductoOrdenByIdOrden(value);
+                }).then(function(obj) {
+                    console.log('update go =', obj.value,
+                        'and go =', obj.result);
+                });
+            },
+            Promise.resolve()
+        ).then(function() {
+                console.log('COMPLETED');
+            });
+        //  ****************************************************************************************************
+
+
 
         console.log('ENTRA1');
         $http({
@@ -668,10 +757,16 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             },
             data:{
                 id :$scope.id,
-                codigo : $scope.selected.codigo,
-                nombre: $scope.selected.nombre,
-                detalle: $scope.selected.detalle,
-                peso: $scope.selected.peso
+                codigo:$scope.obj.codigo,
+                id_vehiculo : $scope.obj.id_vehiculo,
+                id_chofer: $scope.obj.id_chofer,
+                fecha:$scope.obj.fecha,
+                hora_inicio:$scope.obj.hora_inicio,
+                minutos_inicio:$scope.obj.minutos_inicio,
+                hora_retorno:$scope.obj.hora_retorno,
+                minutos_retorno:$scope.obj.minutos_retorno,
+                estado:$scope.obj.estado,
+                ordenes : $scope.obj.ordenes
             }
         }).then(function successCallback(response) {
             $scope.obj = {
@@ -686,11 +781,20 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 estado:0,
                 ordenes :[]
             };
+
+            $scope.listaOrdenesTarget = '';
+            $scope.listaProductoOrdenTarget = [];
+            $scope.objOrdenSelectTarget = '';
+            $scope.listaProductoOrden = [];
+
             $scope.inicializar();
+            $scope.inicializarUpdate();
             console.log('POST');
         }, function errorCallback(response) {
             console.log('falla');
         });
+
+        window.location ='LogisticaEntregas.html';
     }
 
 
@@ -729,6 +833,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                         value.direccion = response.data.direccion;
                         value.observacion = response.data.observacion;
                         value.estado = response.data.estado;
+                        value.fecha_orden = response.data.fecha_orden;
                         value.productos = response.data.productos;
 
 
@@ -814,16 +919,12 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     }
 
 
-
-
-
     function promiseClienteById(value){
         return new Promise(function (fulfill, reject){
             console.log('START cliente with value =', value);
             setTimeout(function() {
 
                 $http({
-
                     method: 'POST',
                     url: myProvider.getCliente() + '/getByIdCliente',
 
@@ -889,6 +990,41 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         });
     }
 
+    function promiseVehiculoByIdLoadUpdate(value){
+        return new Promise(function (fulfill, reject){
+            console.log('START vehiculo with value =', value);
+            setTimeout(function() {
+
+                $http({
+
+                    method: 'POST',
+                    url: myProvider.getVehiculo() + '/getByIdVehiculo',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data :{id :value._id}
+
+
+                }).then(function successCallback(response) {
+                    var n = response.data.length;
+                    if (n == 0) {
+                        alert('no se encontro informacion VEHICULO');
+                    } else {
+                        $scope.objVehiculo = response.data;
+                        $scope.objVehiculoSelect = response.data;
+
+                        console.log("ayuda: " + angular.toJson($scope.objVehiculo));
+                    }
+                }, function errorCallback(response) {
+                    console.log('entra');
+                });
+
+                fulfill({ value: value, result: value });
+            }, 0 | Math.random() * 100);
+        });
+    }
+
     function promiseChoferById(value){
         return new Promise(function (fulfill, reject){
             console.log('START chofer with value =', value);
@@ -911,6 +1047,42 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                         alert('no se encontro informacion CHOFER');
                     } else {
                         value.chofer = response.data.nombre + " (" +response.data.cedula+ ")";
+                    }
+                }, function errorCallback(response) {
+                    console.log('entra');
+                });
+
+                fulfill({ value: value, result: value });
+            }, 0 | Math.random() * 100);
+        });
+    }
+
+    function promiseChoferByIdLoadUpdate(value){
+        return new Promise(function (fulfill, reject){
+            console.log('START chofer with value =', value);
+            setTimeout(function() {
+
+                $http({
+
+                    method: 'POST',
+                    url: myProvider.getChofer() + '/getByIdChofer',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data :{id :value._id}
+
+
+                }).then(function successCallback(response) {
+                    var n = response.data.length;
+                    if (n == 0) {
+                        alert('no se encontro informacion CHOFER');
+                    } else {
+                        $scope.objChofer = response.data;
+                        $scope.objChoferSelect = JSON.stringify( $scope.objChofer);
+
+                        console.log("chofer Json:" + angular.toJson($scope.objChofer ));
+                        console.log("choferSelect Json:" + $scope.objChoferSelect );
                     }
                 }, function errorCallback(response) {
                     console.log('entra');
