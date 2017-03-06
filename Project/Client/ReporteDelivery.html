@@ -19,11 +19,8 @@
 
 
     <script src="./controllers/LoginController.js"></script>
-    <script src="./controllers/UsuarioController.js"></script>
+    <script src="./controllers/ChoferController.js"></script>
     <script src="./angular-1.4.6/angular-local-storage.min.js"></script>
-    <script src="./scripts/Sh.js"></script>
-
-
     <style>
         .selected {
             background-color:#bbbbbb;
@@ -33,7 +30,7 @@
 
     </style>
 </head>
-<body ng-app="myApp" ng-controller="UsuarioController">
+<body ng-app="myApp" ng-controller="ChoferController">
 
 <script src="./scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="./scripts/bootstrap.min.js"></script>
@@ -105,8 +102,8 @@
                             <li class=""><a href="Ordenes.html">Ordenes</a></li>
                             <li class=""><a href="producto.html">Producto</a></li>
                             <li class=""><a href="LogisticaEntregas.html">Logística Entregas</a></li>
-                            <li class=""><a href="ReporteDelivery.html">Reportes</a></li>
-                            <li class="active"><a href="Usuario.html">Usuarios</a></li>
+                            <li class="active"><a href="ReporteDelivery.html">Reportes</a></li>
+                            <li class=""><a href="Usuario.html">Usuarios</a></li>
                             <li class=""><a href="" >Cerrar Sesión</a></li>
 
 
@@ -132,40 +129,42 @@
 
                     <div class="col-md-2 col-xs-8">
 
-                        <h4>Nombre de Usuario </h4>
+                        <label>Placa</label>
                         <br>
-                        <h4>Contraseña</h4>
                         <br>
-                        <h4>Tipo</h4>
+                        <select name="TipoCie" class="form-control" simple>
+                            <option>Supervisor</option>
+                            <option>Administrador</option>
+                            <option>Normal</option>
+                        </select>
+
 
                     </div>
 
                     <div class="col-md-3 col-xs-8">
-                        <input type="text" class="form-control" ng-model="obj.name">
+                        <label>Fecha</label>
                         <br>
-                        <input type="text" class="form-control" ng-model="obj.pass">
                         <br>
-                        <select name="TipoCie" class="form-control" simple ng-model="obj.tipo">
-                            <option value="Operador">Operador</option>
-                            <option value="Supervisor">Supervisor</option>
-                            <option value="Administrador">Administrador</option>
-                        </select>
+                        <input type="date" class="form-control">
+
+
+                    </div>
+
+
+                    <div class="col-md-3 col-xs-8">
+
+                    </div>
+                    <div class="col-md-3 col-xs-8">
+                        <label></label>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-default form-control " >Generar</button>
+                        <br> <br>
 
                     </div>
 
                 </div>
 
-
-                <div class="row">
-                    <div class="col-md-5 col-xs-0"></div>
-                    <div class="col-md-2 col-xs-4">
-                        <br>
-                        <button class="form-control" type="button" ng-click="save()">
-                           Guardar
-                        </button>
-                    </div>
-
-                </div>
                 <br>
                 <br>
                 <br>
@@ -187,11 +186,11 @@
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
 
-                            <tr ng-repeat="item in lista | filter:search | orderBy:name" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
                                 <td>{{$index}}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.tipo }}</td>
-
+                                <td>{{ item.cedula }}</td>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.telefono }}</td>
 
                             </tr>
                             <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
@@ -208,52 +207,101 @@
         <!-- modal en el click para modificar-->
 
         <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modificar</h4>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Ingreso Nuevo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12">
+
+                                    <div></div>
+                                    <label>Nombre de Usuario</label>
+                                    <br>
+                                    <input type="text" class="form-control" ng-model="obj.cedula">
+                                    <br>
+                                    <label>Tipo</label>
+                                    <select name="TipoCie" class="form-control" simple>
+                                        <option>Supervisor</option>
+                                        <option>Administrador</option>
+                                        <option>Normal</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>Nueva Contraseña</label>
+                                    <input type="text" class="form-control" ng-model="obj.telefono">
+                                    <br>
+
+
+                                </div> <!-- aqui el contenido del formulario-->
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="save()">Ingresar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-12 col-xs-12">
+
+            </div>
+        </div>
 
 
-                                <label>Nombre de Usuario</label>
-                                <br>
-                                <input type="text" class="form-control" ng-model="selected.name">
-                                <br>
-                                <label>Tipo</label>
-                                <select name="TipoCie" class="form-control" simple ng-model="selected.tipo">
-                                    <option value="Operador">Operador</option>
-                                    <option value="Supervisor">Supervisor</option>
-                                    <option value="Administrador">Administrador</option>
-                                </select>
-                                <br>
-                                <br>
-                                <label>Nueva Contraseña</label>
-                                <input type="text" class="form-control" ng-model="selected.pass">
-                                <br>
 
 
-                            </div> <!-- aqui el contenido del formulario-->
-                        </div>
-                    </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update()">Guardar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modificar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12">
+
+                                    <div></div>
+                                    <label>Nombre de Usuario</label>
+                                    <br>
+                                    <input type="text" class="form-control" ng-model="obj.cedula">
+                                    <br>
+                                    <label>Tipo</label>
+                                    <select name="TipoCie" class="form-control" simple>
+                                        <option>Supervisor</option>
+                                        <option>Administrador</option>
+                                        <option>Normal</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>Nueva Contraseña</label>
+                                    <input type="text" class="form-control" ng-model="obj.telefono">
+                                    <br>
+
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update()">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
-
     </form>
 </div>
 

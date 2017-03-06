@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <!-----estilos -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" id="pagesheet"/>
+    <link rel="stylesheet" type="text/css" href="../css/OverrideComponents.css" id="pageshee1"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css" id="pageshee3"/>
+    <link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css" id="pageshee4"/>
+
+    <!-----angular-->
+
+    <script src="../angular-1.4.6/angular.js"></script>
+    <script src="../angular-1.4.6/angular-route.js"></script>
+    <script src="../angular-1.4.6/ngStorage.min.js"></script>
+    <script src="../scripts/Sh.js"></script>
+    <script src="../app.js"></script>
+
+
+    <script src="../controllers/LoginController.js"></script>
+    <script src="../angular-1.4.6/angular-local-storage.min.js"></script>
+    <style>
+        .selected {
+            background-color:#bbbbbb;
+            color:black;
+            font-weight:bold;
+        }
+
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="LoginController" ng-init="estadoInicio()">
+
+<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
+<script src="../scripts/bootstrap-datepicker.js"></script>
+<script src="../bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
+
+
+
+<script>
+
+    $(function(){
+
+
+        $('.datepicker').datepicker();
+
+
+        $('#date').change(function(){
+
+            $scope.historiaClinica.fecha_examen = $("#date").val();
+        });
+        console.log('entra');
+
+    });
+</script>
+
+<!-----menu -->
+<header>
+    <nav class="navbar navbar-inverse navbar-static-top " role="navigation">
+        <div class="container">
+            <div class="row">
+                <br>
+
+                <div class="col-md-1 col-xs-2">
+                    <a href=""><img src="../images/StorageSystem2.svg"
+                                    style="max-width: 100px; max-height: 50px"/></a><br><br>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <p  class="navbar-brand" style="color:#4290A5 ; font-family: OCRAStd; ">Storage System </p>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-----main -->
+<div class="jumbotron">
+
+        <form class="panel ">
+            <div class="panel-heading hidden-print text-center">
+                <br>
+                <img src="./images/StorageSystem2.svg" style="max-width: 100px; max-height: 50px"><br>
+                 <p  style="color:#4290A5 ; font-family: OCRAStd; ">Storage System </p><br>
+
+                <br>
+            </div>
+            <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-xs-0">
+
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <h3 style="">Ingreso al Sistema</h3>
+                    <br>
+                    <label>Nombre de Usuario</label><br>
+                    <input class="form-control" type="text" placeholder="Nombre de Usuario" ng-model="user.name" ><br>
+                    <br>
+                    <label>Contraseña</label><br>
+                    <input class="form-control" type="password" placeholder="Contraseña" ng-model="user.pass"><br><br>
+                    <input type="submit" value="Ingresar" class="form-control" ng-click="login()">
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+             </div>
+        </form>
+    <footer class="footer">
+
+    </footer>
+    </div>
+</body>
+</html>

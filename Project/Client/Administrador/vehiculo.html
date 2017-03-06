@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DashBoard</title>
     <!-----estilos -->
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css" id="pagesheet"/>
-    <link rel="stylesheet" type="text/css" href="./css/OverrideComponents.css" id="pageshee1"/>
-    <link rel="stylesheet" type="text/css" href="./css/datepicker.css" id="pageshee3"/>
-    <link rel="stylesheet" type="text/css" href="./font-awesome-4.7.0/css/font-awesome.min.css" id="pageshee4"/>
-    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css" id="pageshee5">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" id="pagesheet"/>
+    <link rel="stylesheet" type="text/css" href="../css/OverrideComponents.css" id="pageshee1"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css" id="pageshee3"/>
+    <link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css" id="pageshee4"/>
+
     <!-----angular-->
 
-    <script src="./angular-1.4.6/angular.js"></script>
-    <script src="./angular-1.4.6/angular-route.js"></script>
-    <script src="./angular-1.4.6/ngStorage.min.js"></script>
-    <script src="./app.js"></script>
+    <script src="../angular-1.4.6/angular.js"></script>
+    <script src="../angular-1.4.6/angular-route.js"></script>
+    <script src="../angular-1.4.6/ngStorage.min.js"></script>
+    <script src="../app.js"></script>
 
-    <script src="./controllers/LoginController.js"></script>
-    <script src="./controllers/ChoferController.js"></script>
-    <script src="./angular-1.4.6/angular-local-storage.min.js"></script>
+
+    <script src="../controllers/LoginController.js"></script>
+    <script src="../controllers/VehiculoController.js"></script>
+    <script src="../angular-1.4.6/angular-local-storage.min.js"></script>
     <style>
         .selected {
             background-color:#bbbbbb;
@@ -29,14 +30,16 @@
 
     </style>
 </head>
-<body ng-app="myApp" ng-controller="ChoferController">
+<body ng-app="myApp" ng-controller="VehiculoController">
 
-<script src="./scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="./scripts/bootstrap.min.js"></script>
-<script src="./scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
-<script src="./scripts/bootstrap-datepicker.js"></script>
-<script src="./scripts/dataTable.min.js"></script>
-<script src="./bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
+<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/ui-bootstrap-tpls-1.3.2.min.js"></script>
+<script src="../scripts/bootstrap-datepicker.js"></script>
+<script src="../bower_components/angularUtils-pagination/dirPagination.js"></script><!--esta linea para paginar-->
+
+
+
 <script>
 
     $(function(){
@@ -62,7 +65,7 @@
                 <br>
 
                 <div class="col-md-1 col-xs-2">
-                    <a href="index.html"><img src="./images/StorageSystem2.svg"
+                    <a href="index.html"><img src="../images/StorageSystem2.svg"
                                     style="max-width: 100px; max-height: 50px"/></a><br><br>
                 </div>
                 <div class="col-md-3 col-xs-6">
@@ -94,13 +97,12 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class=""><a href="index.html">Home</a></li>
                             <li class=""><a href="client.html">Cliente</a></li>
-                            <li class=""><a href="vehiculo.html">Vehículo</a></li>
-                            <li class="active"><a href="chofer.html">Chofer</a></li>
+                            <li class="active"><a href="vehiculo.html">Vehículo</a></li>
+                            <li class=""><a href="chofer.html">Chofer</a></li>
                             <li class=""><a href="Ordenes.html">Ordenes</a></li>
                             <li class=""><a href="producto.html">Producto</a></li>
                             <li class=""><a href="LogisticaEntregas.html">Logística Entregas</a></li>
                             <li class=""><a href="ReporteDelivery.html">Reportes</a></li>
-                            <li class=""><a href="Usuario.html">Usuarios</a></li>
                             <li class=""><a href="" >Cerrar Sesión</a></li>
 
 
@@ -132,12 +134,12 @@
                     </div>
 
 
-                </div>
+                    </div>
 
-                <div class="row">
-                    <div class="col-md-10 col-xs-0"></div>
+                    <div class="row">
+                        <div class="col-md-10 col-xs-0"></div>
 
-                    <div class="col-md-2 col-xs-4">
+                        <div class="col-md-2 col-xs-4">
                         <br>
 
                         <button class="form-control" type="button" data-toggle="modal" data-target="#myModal">
@@ -145,48 +147,46 @@
                         </button>
                     </div>
 
+
                 </div>
                 <br>
                 <br>
                 <br>
                 <!-- Inicio de la tabla-->
                 <div class="row">
-                    <div class="col-md-12 col-xs-12"  >
-                        <table class="table table-hover"
-                               data-sort-name="Cedula" >
-
-
-
+                    <div class="col-md-12 col-xs-12">
+                        <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th >#</th>
-                                <th >Cedula</th>
-                                <th >Nombre</th>
-                                <th >Telefono</th>
+                                <th>#</th>
+                                <th>Placa</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Carga</th>
 
                             </tr>
-
-
 
 
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
-
-                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:10" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)"><!--aqui habia ng-repeat-->
+                            <tr dir-paginate="item in lista | filter:search | itemsPerPage:10 | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
                                 <td>{{$index}}</td>
-                                <td>{{ item.cedula }}</td>
-                                <td>{{ item.nombre }}</td>
-                                <td>{{ item.telefono }}</td>
+                                <td>{{ item.placa }}</td>
+                                <td>{{ item.marca }}</td>
+                                <td>{{ item.modelo }}</td>
+                                <td>{{ item.carga }}</td>
 
                             </tr>
                             <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
+
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-            <!-- botones de paginacion borrar-->
 
+            <!-- botones de paginacion-->
+
+        </div>
 
         <!-- modal en el click para modificar-->
 
@@ -206,16 +206,20 @@
                                 <div class="col-md-12 col-xs-12">
 
                                     <div></div>
-                                    <label>Cedula</label>
+                                    <label>Placa</label>
                                     <br>
-                                    <input type="text" class="form-control" ng-model="obj.cedula">
+                                    <input type="text" class="form-control" ng-model="obj.placa">
                                     <br>
-                                    <label>Nombre</label>
-                                    <input type="text" class="form-control" ng-model="obj.nombre">
+                                    <label>Marca</label>
+                                    <input type="text" class="form-control" ng-model="obj.marca">
                                     <br>
                                     <br>
-                                    <label>Telefono</label>
-                                    <input type="text" class="form-control" ng-model="obj.telefono">
+                                    <label>Modelo</label>
+                                    <input type="text" class="form-control" ng-model="obj.modelo">
+                                    <br>
+                                    <br>
+                                    <label>Carga</label>
+                                    <input type="text" class="form-control" ng-model="obj.carga">
                                     <br>
 
 
@@ -253,16 +257,20 @@
                                 <div class="col-md-12 col-xs-12">
 
                                     <div></div>
-                                    <label>Cedula</label>
+                                    <label>Placa</label>
                                     <br>
-                                    <input type="text" class="form-control" ng-model="selected.cedula">
+                                    <input type="text" class="form-control" ng-model="selected.placa">
                                     <br>
-                                    <label>Nombre</label>
-                                    <input type="text" class="form-control" ng-model="selected.nombre">
+                                    <label>Marca</label>
+                                    <input type="text" class="form-control" ng-model="selected.marca">
                                     <br>
                                     <br>
-                                    <label>Telefono</label>
-                                    <input type="text" class="form-control" ng-model="selected.telefono">
+                                    <label>Modelo</label>
+                                    <input type="text" class="form-control" ng-model="selected.modelo">
+                                    <br>
+                                    <br>
+                                    <label>Carga</label>
+                                    <input type="text" class="form-control" ng-model="selected.carga">
                                     <br>
                                     <!-- aqui el contenido del formulario-->
 
@@ -284,17 +292,7 @@
     </form>
 </div>
 
-<script>
-    function queryParams() {
-        return {
-            type: 'owner',
-            sort: 'updated',
-            direction: 'desc',
-            per_page: 100,
-            page: 1
-        };
-    }
-</script>
+
 
 </body>
 </html>
