@@ -12,6 +12,9 @@ function ApiUrl(){
         return 'http://192.168.1.101:3000/api/login';
     }
 
+    this.getUsuario= function(){
+        return 'http://192.168.1.101:3000/api';
+    }
 
     this.getCliente = function(){
         return 'http://192.168.1.101:3000/api';

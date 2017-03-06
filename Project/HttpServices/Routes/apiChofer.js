@@ -37,6 +37,7 @@ router.post('/updateChofer',function(req,res){
             cedula: req.body.cedula,
             nombre: req.body.nombre,
             telefono: req.body.telefono
+
         };
         var id = req.body.id;
         db.collection('chofer').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
