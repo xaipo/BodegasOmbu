@@ -693,10 +693,14 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     };
 
 
+    $scope.generarReporteImpreso1 = function () {
+        console.log("id_vehiculo: " + $scope.id_vehiculoSearch + "fecha: " + $scope.fechaSearch);
+    }
+
     $scope.generarReporteImpreso = function () {
         $scope.lista = [];
         $http({
-            method: 'GET',
+            method: 'POST',
             url: myProvider.getDelivery() + '/getByVehiculoAndFechaDelivery',
             headers: {
                 'Content-Type': 'application/json'
@@ -708,7 +712,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         }).then(function successCallback(response) {
             var n = response.data.length;
             if (n == 0) {
-                alert('no se encontro informacion');
+                alert('no se encontro informacion reporte');
             } else {
 
                 for (var i = 0; i < n; i++) {
@@ -738,10 +742,10 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                     $scope.lista.push(auxObj);
 
                 }
-                console.log("SALIMOS DEL POST: " + $scope.lista);
+                console.log("SALIMOS DEL POST reporte: " + angular.toJson($scope.lista));
             }
         }, function errorCallback(response) {
-            console.log('entra');
+            console.log('entra falla reporte');
             $scope.mesaje = response.mensaje;
         });
 

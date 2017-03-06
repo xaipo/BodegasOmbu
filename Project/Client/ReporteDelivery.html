@@ -171,33 +171,72 @@
                 <!-- Inicio de la tabla-->
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <table class="table table-hover">
+
+                        <table class="table table-hover" >
                             <thead>
                             <tr>
+
                                 <th>#</th>
-                                <th>Usuario</th>
-                                <th>Tipo</th>
+                                <th>Código Entrega</th>
+                                <th>Vehículo</th>
+                                <th>Chofer</th>
+                                <th>Fecha</th>
+                                <th>Hora Inicio</th>
+                                <th>Hora Retorno</th>
+                                <th>Estado</th>
+                                <th></th>
 
                             </tr>
-
-
-
 
                             </thead>
                             <tbody data-toggle="modal" data-target="#myModal2">
 
-                            <tr ng-repeat="item in lista | filter:search | orderBy:item.codigo" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item)">
+                            <tr ng-repeat-start="item in lista | filter:search | orderBy:-codigo" ng-class="{'selected':$index == selectedRow}" >
+
+
+
                                 <td>{{$index}}</td>
-                                <td>{{ item.cedula }}</td>
-                                <td>{{ item.nombre }}</td>
-                                <td>{{ item.telefono }}</td>
+                                <td>{{ item.codigo }}</td>
+                                <td>{{ item.vehiculo }}</td>
+                                <td>{{ item.chofer }}</td>
+                                <td>{{ item.fecha }} </td>
+                                <td>{{ item.hora_inicio }} : {{item.minutos_inicio}}</td>
+                                <td>{{ item.hora_retorno }} : {{item.minutos_retorno}}</td>
+                                <td>{{ item.estado }}</td>
+
 
                             </tr>
-                            <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
+                            <tr n ng-repeat-end="">
+                                <td colspan="8">
+                                    <ul>
+                                        <li ng-repeat="itemOr in item.ordenes">
+                                            <b>Orden:</b> {{ itemOr.codigo }}. <b>Cliente:</b> {{itemOr.nombre_cliente}}. <b># Factura:</b> {{itemOr.numero_factura}}.
+                                            <br/><b>Dirección:</b> {{itemOr.direccion}}
+                                            <br/><b>Productos:</b>
+                                            <ul style="list-style:none">
+                                                <li ng-repeat="itemPr in itemOr.productos">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-xs-6">
+                                                            {{itemPr.nombre_producto}}
+                                                        </div>
+                                                        <div class="col-md-3 col-xs-6"><b>CANTIDAD:</b> {{itemPr.cantidad}}</div>
+
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <hr style="border-width: 10px;"/>
+                                    <hr style="border-width: 10px;"/>
+                                </td>
+                            </tr>
 
 
                             </tbody>
                         </table>
+
+
+
                     </div>
                 </div>
             </div>

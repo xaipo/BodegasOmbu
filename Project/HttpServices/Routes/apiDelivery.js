@@ -90,7 +90,7 @@ router.post('/getByIdDelivery',function(req,res){
     });
 });
 
-router.post('/getByVehiculoAndFechaDelivery',function(req,res){
+/*router.post('/getByVehiculoAndFechaDelivery',function(req,res){
 
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
@@ -104,7 +104,7 @@ router.post('/getByVehiculoAndFechaDelivery',function(req,res){
         });
         db.close();
     });
-});
+});*/
 
 
 router.get('/getAllDelivery',function(req,res){
@@ -129,6 +129,7 @@ router.get('/getAllDelivery',function(req,res){
 
     });
 });
+
 router.post('/getByVehiculoAndFechaDelivery',function(req,res){
 
     MongoClient.connect(url, function(err, db) {

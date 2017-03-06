@@ -181,7 +181,7 @@
                             </thead>
                             <tbody >
 
-                            <tr dir-paginate="item in lista | filter:search |itemsPerPage:10 | orderBy:-codigo" ng-class="{'selected':$index == selectedRow}" >
+                            <tr dir-paginate="item in lista | filter:search |itemsPerPage:10 | orderBy:'-fecha'" ng-class="{'selected':$index == selectedRow}" >
 
                                 <td>{{$index}}</td>
                                 <td>{{ item.codigo }}</td>
