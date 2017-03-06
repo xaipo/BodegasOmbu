@@ -9,35 +9,35 @@ var app = angular.module("myApp", ['ngStorage','ngRoute','angularUtils.directive
 function ApiUrl(){
 
     this.getLogin=function(){
-        return 'http://192.168.1.101:3000/api/login';
+        return 'localhost:3000/api/login';
     }
 
     this.getUsuario= function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getCliente = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getProducto = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getChofer = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getVehiculo = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getOrden = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 
     this.getDelivery = function(){
-        return 'http://192.168.1.101:3000/api';
+        return 'localhost:3000/api';
     }
 }
 
@@ -62,11 +62,11 @@ app.factory("myProvider",function(){
 
         /*$provide.factory("ApiUrl", function () {
             return {
-                urlUsuarios: 'http://192.168.1.101:3000/api/usuarios'
+                urlUsuarios: 'localhost:3000/api/usuarios'
             };
         })*/
 
-        //$provide.value('urlUsuarios', 'http://192.168.1.101:3000/api/usuarios');
+        //$provide.value('urlUsuarios', 'localhost:3000/api/usuarios');
 
 
 
@@ -75,7 +75,7 @@ app.factory("myProvider",function(){
 
 
 
-//('urlUsuarios', 'http://192.168.1.101:3000/api/usuarios');
+//('urlUsuarios', 'localhost:3000/api/usuarios');
 
 
 
