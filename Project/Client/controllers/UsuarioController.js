@@ -13,7 +13,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
     $scope.obj = {
         name: '',
-        pass: '',
+        password: '',
         tipo: ''
     };
 
@@ -85,7 +85,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
     $scope.save = function (){
 
-        $scope.obj.pass = SHA1($scope.obj.pass);
+        $scope.obj.password = SHA1($scope.obj.password);
         $http({
             method: 'POST',
             url: myProvider.getUsuario() + '/saveUsuario',
@@ -94,7 +94,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
             },
             data:{
                 name : $scope.obj.name,
-                pass: $scope.obj.pass,
+                password: $scope.obj.password,
                 tipo: $scope.obj.tipo
             }
         }).then(function successCallback(response) {
@@ -102,7 +102,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
             $scope.obj = {
                 name: '',
-                pass: '',
+                password: '',
                 tipo: ''
             };
             $scope.inicializar();
@@ -118,7 +118,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
         $scope.id = $scope.selected._id;
         console.log($scope.selected);
-        $scope.obj.pass = SHA1($scope.obj.pass);
+        $scope.obj.password = SHA1($scope.obj.password);
 
         console.log('ENTRA1');
         $http({
@@ -130,13 +130,13 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
             data:{
                 id :$scope.id,
                 name : $scope.selected.name,
-                pass: $scope.selected.pass,
+                password: $scope.selected.password,
                 tipo: $scope.selected.tipo
             }
         }).then(function successCallback(response) {
             $scope.obj = {
                 name: '',
-                pass: '',
+                password: '',
                 tipo: ''
             };
             $scope.inicializar();

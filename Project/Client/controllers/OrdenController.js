@@ -304,8 +304,8 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                 $scope.selected.fecha_orden =  new Date( $scope.selected.fecha_orden);
                 $scope.selected.fecha_factura =  new Date( $scope.selected.fecha_factura);
 
-                document.getElementById('fechaOrden').value=$scope.selected.fecha_orden;
-                document.getElementById('fechaFactura').value=$scope.selected.fecha_factura;
+                //document.getElementById('fechaOrden').value=$scope.selected.fecha_orden;
+                //document.getElementById('fechaFactura').value=$scope.selected.fecha_factura;
 
                 promiseClienteById($scope.selected);
 
@@ -420,7 +420,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         }, function errorCallback(response) {
             console.log('falla');
         });
-        //window.location ='Ordenes.html';
+        window.location ='Ordenes.html';
     }
 
 

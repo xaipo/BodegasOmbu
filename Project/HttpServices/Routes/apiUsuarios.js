@@ -63,7 +63,7 @@ router.post('/updateUsuario',function(req,res){
         console.log(req.body);
         var item = {
             name: req.body.name,
-            pass: req.body.pass,
+            password: req.body.pass,
             tipo: req.body.tipo
 
         };

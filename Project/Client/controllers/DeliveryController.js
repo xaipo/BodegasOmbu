@@ -188,7 +188,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         $scope.listaProductoOrden = [];
         var n = $scope.objOrden.productos.length;
         for(var i=0; i<n; i++){
-            if($scope.objOrden.productos[i].estado == "0"){
+            if($scope.objOrden.productos[i].estado == '0'){
                 console.log("producto " +i);
                 $scope.listaProductoOrden.push($scope.objOrden.productos[i]);
             }
@@ -216,7 +216,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         $scope.listaProductoOrdenTarget = [];
         var n = $scope.objOrdenTarget.productos.length;
         for(var i=0; i<n; i++){
-            if($scope.objOrdenTarget.productos[i].estado == "1"){
+            if($scope.objOrdenTarget.productos[i].estado == '1'){
                 console.log("producto " +i);
                 $scope.listaProductoOrdenTarget.push($scope.objOrdenTarget.productos[i]);
             }
@@ -250,10 +250,10 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     $scope.agregarOrdenTotal=function(){
         if($scope.objOrden != ''){
 
-            $scope.objOrden.estado = "1"; //estado 0:pendiente 1:asignado 2:entregado
+            $scope.objOrden.estado = '1'; //estado 0:pendiente 1:asignado 2:entregado
             var l1 = $scope.objOrden.productos.length;
             for(var l2=0; l2<l1; l2++){
-                $scope.objOrden.productos[l2].estado = "1"; //estado 0:pendiente 1:asignado 2:entregado
+                $scope.objOrden.productos[l2].estado = '1'; //estado 0:pendiente 1:asignado 2:entregado
             }
 
             //console.log("cambio estado: "+ angular.toJson($scope.objOrden));
@@ -360,7 +360,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 if($scope.listaOrdenes[i]._id==auxOrden._id){
                     var m = auxOrden.productos.length;
                     for(var j=0; j<m; j++){
-                        auxOrden.productos[j].estado = "0";//estado 0:pendiente 1:asignado 2:entregado
+                        auxOrden.productos[j].estado = '0';//estado 0:pendiente 1:asignado 2:entregado
                         $scope.listaOrdenes[i].productos.push(auxOrden.productos[j]);
                     }
                     i=n;
@@ -372,7 +372,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             if(!control){
                 var m1 = auxOrden.productos.length;
                 for(var j1=0; j1<m1; j1++){
-                    auxOrden.productos[j1].estado = "0";//estado 0:pendiente 1:asignado 2:entregado
+                    auxOrden.productos[j1].estado = '0';//estado 0:pendiente 1:asignado 2:entregado
                 }
                 $scope.listaOrdenes.push(auxOrden);
             }
@@ -470,7 +470,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 for (var i = 0; i < n; i++) {
                     $scope.aux = response.data[i];
 
-                    if($scope.aux.estado == "0"){
+                    if($scope.aux.estado == '0'){
 
                         $scope.listaOrdenes.push($scope.aux);
                     }
@@ -523,7 +523,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 for (var i = 0; i < n; i++) {
                     $scope.aux = response.data[i];
 
-                    if($scope.aux.estado == "1"){
+                    if($scope.aux.estado == '1'){
 
                         $scope.listaOrdenes.push($scope.aux);
                     }
