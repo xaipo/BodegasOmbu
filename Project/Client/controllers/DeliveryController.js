@@ -284,7 +284,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             $scope.listaProductoOrden = [];
             $scope.objProductoOrden = '';
 
-            console.log("break 1: "+ angular.toJson($scope.listaOrdenesTarget));
+            console.log("break agregar: "+ angular.toJson($scope.listaOrdenesTarget));
         }
     }
 
@@ -353,6 +353,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     $scope.quitarOrdenTarget= function () {
         if($scope.objOrdenSelectTarget!=''){
             var auxOrden=JSON.parse($scope.objOrdenSelectTarget);
+            auxOrden.estado = '0'; //estado 0:pendiente 1:asignado 2:entregado
             var control = false;
             var n = $scope.listaOrdenes.length;
             var i=0;
@@ -391,8 +392,77 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             $scope.listaProductoOrdenTarget = [];
             $scope.objOrdenSelectTarget = '';
             $scope.listaProductoOrden = [];
+
+            console.log("break quitar: "+ angular.toJson($scope.listaOrdenes));
         }
     }
+
+    $scope.quitarOrdenTargetUpdate= function () {
+        if($scope.objOrdenSelectTarget!=''){
+            var auxOrden=JSON.parse($scope.objOrdenSelectTarget);
+            auxOrden.estado = '0'; //estado 0:pendiente 1:asignado 2:entregado
+            var control = false;
+            var n = $scope.listaOrdenes.length;
+            var i=0;
+            while(i<n){
+                if($scope.listaOrdenes[i]._id==auxOrden._id){
+                    var m = auxOrden.productos.length;
+                    for(var j=0; j<m; j++){
+                        auxOrden.productos[j].estado = '0';//estado 0:pendiente 1:asignado 2:entregado
+                        $scope.listaOrdenes[i].productos.push(auxOrden.productos[j]);
+                    }
+                    i=n;
+                    control = true;
+                }
+                i++;
+            };
+
+            if(!control){
+                var m1 = auxOrden.productos.length;
+                for(var j1=0; j1<m1; j1++){
+                    auxOrden.productos[j1].estado = '0';//estado 0:pendiente 1:asignado 2:entregado
+                }
+                $scope.listaOrdenes.push(auxOrden);
+            }
+
+
+            var nn = $scope.listaOrdenesTarget.length;
+            var ii=0;
+            while(ii<nn) {
+                if($scope.listaOrdenesTarget[ii]._id == auxOrden._id){
+                    $scope.listaOrdenesTarget.splice(ii,1);
+                    ii=nn;
+                }
+                ii++;
+            };
+
+            // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+            $scope.listaOrdenes.reduce(
+                function (sequence, value) {
+                    return sequence.then(function() {
+                        return promiseUpdateProductoOrdenByIdOrden(value);
+                    }).then(function(obj) {
+                        console.log('update go =', obj.value,
+                            'and go =', obj.result);
+                    });
+                },
+                Promise.resolve()
+            ).then(function() {
+                    console.log('COMPLETED');
+
+                });
+            //  ****************************************************************************************************
+
+            $scope.listaProductoOrdenTarget = [];
+            $scope.objOrdenSelectTarget = '';
+            $scope.listaProductoOrden = [];
+
+            console.log("break quitar: "+ angular.toJson($scope.listaOrdenes));
+        }
+    }
+
+
+
 
 
 
@@ -753,21 +823,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         };
 
 
-        // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
-        $scope.listaOrdenesTarget.reduce(
-            function (sequence, value) {
-                return sequence.then(function() {
-                    return promiseUpdateProductoOrdenByIdOrden(value);
-                }).then(function(obj) {
-                    console.log('update go =', obj.value,
-                        'and go =', obj.result);
-                });
-            },
-            Promise.resolve()
-        ).then(function() {
-                console.log('COMPLETED');
-            });
-        //  ****************************************************************************************************
+
 
 
 
@@ -795,6 +851,24 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         }).then(function successCallback(response) {
             console.log('save: ' + $scope.obj);
 
+            // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+            $scope.listaOrdenesTarget.reduce(
+                function (sequence, value) {
+                    return sequence.then(function() {
+                        return promiseUpdateProductoOrdenByIdOrden(value);
+                    }).then(function(obj) {
+                        console.log('update go =', obj.value,
+                            'and go =', obj.result);
+                    });
+                },
+                Promise.resolve()
+            ).then(function() {
+                    console.log('COMPLETED');
+                    window.location ='LogisticaEntregas.html';
+                });
+            //  ****************************************************************************************************
+
+
             $scope.obj = {
                 codigo:'',
                 id_vehiculo : '',
@@ -808,10 +882,11 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 ordenes :[]
             };
 
-            $scope.listaOrdenesTarget = '';
+            $scope.listaOrdenesTarget = [];
             $scope.listaProductoOrdenTarget = [];
             $scope.objOrdenSelectTarget = '';
             $scope.listaProductoOrden = [];
+
 
             $scope.inicializar();
             console.log('POST');
@@ -819,7 +894,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             console.log('falla');
         });
 
-        window.location ='LogisticaEntregas.html';
+        //window.location ='LogisticaEntregas.html';
 
     }
 
@@ -844,21 +919,6 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
         console.log("break 2: " + angular.toJson($scope.obj.ordenes));
 
-        // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
-        $scope.listaOrdenesTarget.reduce(
-            function (sequence, value) {
-                return sequence.then(function() {
-                    return promiseUpdateProductoOrdenByIdOrden(value);
-                }).then(function(obj) {
-                    console.log('update go =', obj.value,
-                        'and go =', obj.result);
-                });
-            },
-            Promise.resolve()
-        ).then(function() {
-                console.log('COMPLETED');
-            });
-        //  ****************************************************************************************************
 
 
 
@@ -884,6 +944,29 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 ordenes : $scope.obj.ordenes
             }
         }).then(function successCallback(response) {
+
+
+            // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+            $scope.listaOrdenesTarget.reduce(
+                function (sequence, value) {
+                    return sequence.then(function() {
+                        return promiseUpdateProductoOrdenByIdOrden(value);
+                    }).then(function(obj) {
+                        console.log('update go =', obj.value,
+                            'and go =', obj.result);
+                    });
+                },
+                Promise.resolve()
+            ).then(function() {
+                    console.log('COMPLETED');
+                    window.location ='LogisticaEntregas.html';
+
+
+
+
+                });
+            //  ****************************************************************************************************
+
             $scope.obj = {
                 codigo:'',
                 id_vehiculo : '',
@@ -909,7 +992,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             console.log('falla');
         });
 
-        window.location ='LogisticaEntregas.html';
+
     }
 
 
@@ -928,7 +1011,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
                 $http({
 
                     method: 'POST',
-                    url: myProvider.getProducto() + '/getByIdOrden',
+                    url: myProvider.getOrden() + '/getByIdOrden',
 
                     headers: {
                         'Content-Type': 'application/json'
@@ -1212,14 +1295,6 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         return new Promise(function (fulfill, reject){
             console.log('START execution with value =', value);
             setTimeout(function() {
-
-                //var aa = $scope.getProductoById(value.id_producto);
-
-                /*var n = value.productos.length;
-                for(var i=0; i<n; i++){
-                    value.productos[i].estado=1;
-                }*/
-
 
 
                 $http({

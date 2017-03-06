@@ -154,14 +154,19 @@
 
                         <div class="col-md-4 col-xs-0">
                             <input type="text" class="form-control" placeholder="Buscar Producto" ng-model="searchProductoOrden" />
-                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objProductoOrdenSelect" ng-click="changeTypeProductoOrden()">
-                                <option  ng-repeat="auxP in listaProductoOrden | filter:searchProductoOrden" value="{{auxP}}">{{auxP.nombre_producto}} </option>
+                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objProductoOrdenSelect" >
+                                <option  ng-repeat="auxP in listaProductoOrden | filter:searchProductoOrden" value="{{auxP}}">{{auxP.nombre_producto}} (Cant.:{{auxP.cantidad}}) </option>
                             </select>
                         </div>
 
 
                 </div>
 
+                <div class="col-md-3 col-xs-0">
+                    <br/>
+                    <button type="button" class="btn btn-default form-control" ng-click="agregarOrdenTotal()">Confirmar Entrega</button>
+
+                </div>
                 <br>
                 <br>
 
@@ -176,13 +181,13 @@
 
                     <div class="col-md-4 col-xs-8">
 
-                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objChoferSelect" ng-click="changeTypeChofer()">
-                            <option ng-repeat="auxC in listaChoferes | filter:searchChofer" value="{{auxC}}">{{auxC.nombre}} </option>
+                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objOrdenSelectTarget" >
+                            <option ng-repeat="auxOT in listaOrdenesTarget" value="{{auxOT}}">{{auxOT.codigo}} - ({{auxOT.fecha_orden}}) </option>
                         </select>
                     </div>
 
                         <div class="col-md-2 col-xs-0">
-                            <button type="button" class="btn btn-default form-control" ng-click="">Quitar Orden</button>
+                            <button type="button" class="btn btn-default form-control" ng-click="quitarOrdenTarget()">Quitar Orden</button>
 
                             <br>
                             <br>
@@ -201,8 +206,6 @@
                 <br>
                 <br><br>
                 <br>
-
-
 
             </div>
         </div>
