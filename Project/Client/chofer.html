@@ -186,7 +186,7 @@
                 </div>
             </div>
             <!-- botones de paginacion borrar-->
-
+        </div>
 
         <!-- modal en el click para modificar-->
 
@@ -208,14 +208,14 @@
                                     <div></div>
                                     <label>Cedula</label>
                                     <br>
-                                    <input type="text" class="form-control" ng-model="obj.cedula">
+                                    <input type="text" class="form-control" ng-model="obj.cedula" required>
                                     <br>
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control" ng-model="obj.nombre">
+                                    <input type="text" class="form-control" ng-model="obj.nombre" required>
                                     <br>
                                     <br>
                                     <label>Telefono</label>
-                                    <input type="text" class="form-control" ng-model="obj.telefono">
+                                    <input type="text" class="form-control" ng-model="obj.telefono" required>
                                     <br>
 
 
@@ -226,7 +226,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="save()">Ingresar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" formnovalidate>Cancelar</button>
                     </div>
                 </div>
 
@@ -238,50 +238,52 @@
 
         <!--modal para agregar nuevo -->
 
-        <div id="myModal2" class="modal fade" role="dialog">
-            <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modificar</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12 col-xs-12">
-
-                                    <div></div>
-                                    <label>Cedula</label>
-                                    <br>
-                                    <input type="text" class="form-control" ng-model="selected.cedula">
-                                    <br>
-                                    <label>Nombre</label>
-                                    <input type="text" class="form-control" ng-model="selected.nombre">
-                                    <br>
-                                    <br>
-                                    <label>Telefono</label>
-                                    <input type="text" class="form-control" ng-model="selected.telefono">
-                                    <br>
-                                    <!-- aqui el contenido del formulario-->
-
-                                </div>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update()">Guardar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </form>
+
+    <div id="myModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modificar</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="frmUpdate">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+
+                                <div></div>
+                                <label>Cedula</label>
+                                <br>
+                                <input type="text" class="form-control" ng-model="selected.cedula" ng-required="true">
+                                <br>
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" ng-model="selected.nombre" ng-required="true">
+                                <br>
+                                <br>
+                                <label>Telefono</label>
+                                <input type="text" class="form-control" ng-model="selected.telefono" ng-required="true">
+                                <br>
+                                <!-- aqui el contenido del formulario-->
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update()" ng-disabled="frmUpdate.$invalid">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" formnovalidate>Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 <script>
