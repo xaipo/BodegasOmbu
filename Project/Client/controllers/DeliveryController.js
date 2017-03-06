@@ -154,6 +154,10 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     };
 
 
+    $scope.redirectConfirmacionEntregas=function(){
+        window.location ='RegistroEntregarOrden.html';
+    }
+
     $scope.redirectLogisticaEntregas=function(){
         window.location ='LogisticaEntregas.html';
     }
@@ -500,6 +504,59 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
     };
 
+
+    $scope.cargaOrdenes = function () {
+
+        $scope.listaOrdenes = [];
+
+        $http({
+            method: 'GET',
+            url: myProvider.getOrden() + '/getAllOrden',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function successCallback(response) {
+            var n = response.data.length;
+            if (n == 0) {
+                alert('no se encontro informacion');
+            } else {
+                for (var i = 0; i < n; i++) {
+                    $scope.aux = response.data[i];
+
+                    if($scope.aux.estado == "1"){
+
+                        $scope.listaOrdenes.push($scope.aux);
+                    }
+
+                }
+
+                // PROMESA ASINCRONA CONTROL getCLIENTE BY ID **********************************************************
+                $scope.listaOrdenes.reduce(
+                    function (sequence, value) {
+                        return sequence.then(function() {
+                            return promiseClienteById(value);
+                        }).then(function(obj) {
+                            console.log('END execution with value =', obj.value,
+                                'and result =', obj.result);
+                        });
+                    },
+                    Promise.resolve()
+                ).then(function() {
+                        console.log('COMPLETED');
+                    });
+                //  ****************************************************************************************************
+
+
+                console.log($scope.listaOrdenes);
+
+            }
+        }, function errorCallback(response) {
+            console.log('entra');
+            $scope.mesaje = response.mensaje;
+        });
+
+    };
+
 //funcion que llama a un web services cuando inicializa la pagina
 
     $scope.inicializar = function () {
@@ -714,8 +771,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
 
 
-        var vec=$scope.obj.fecha.split("T");
-        $scope.obj.fecha=vec[0];
+
 
         $http({
             method: 'POST',
@@ -805,8 +861,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         //  ****************************************************************************************************
 
 
-        var vec=$scope.obj.fecha.split("T");
-        $scope.obj.fecha=vec[0];
+
 
         console.log('ENTRA1');
         $http({

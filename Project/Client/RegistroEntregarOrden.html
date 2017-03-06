@@ -116,7 +116,7 @@
 </header>
 <!-----main -->
 <div class="jumbotron">
-    <form class="form-control" ng-init="cargaVehiculosChoferesOrdenes()">
+    <form class="form-control" ng-init="cargaOrdenes()">
         <div class="panel ">
             <div class="panel-heading hidden-print">
 
@@ -136,39 +136,29 @@
 
                         <div class="col-md-4 col-xs-8">
 
-                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objChoferSelect" ng-click="changeTypeChofer()">
-                                <option ng-repeat="auxC in listaChoferes | filter:searchChofer" value="{{auxC}}">{{auxC.nombre}} </option>
+                            <input type="text" class="form-control" placeholder="Buscar Orden" ng-model="searchOrden" />
+                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objOrdenSelect" ng-click="changeTypeOrden()">
+                                <option  ng-repeat="auxO in listaOrdenes | filter:searchOrden" value="{{auxO}}">{{auxO.codigo}} - ({{auxO.fecha_orden}})</option>
                             </select>
                         </div>
 
 
-                    <div class="col-md-1 col-xs-0">
-                        <h4>Orden</h4>
-                        <br>
-                        <h4>Cliente</h4>
-                        <br>
-                        <h4>Productos</h4>
+                    <div class="col-md-4 col-xs-0">
+                        <label class="form-control">Orden: {{objOrden.codigo}}</label>
+                        <label class="form-control">Cliente: {{objOrden.nombre_cliente}}</label>
+                        <label class="form-control">Fecha: {{objOrden.fecha_orden}}</label>
+                        <label class="form-control">Dirección: {{objOrden.direccion}}</label>
 
                     </div>
 
-                    <div class="col-md-3 col-xs-8">
-                        <label class="form-control" >{{objVehiculo.carga}} </label>
-                        <br>
-                        <label class="form-control" >{{objVehiculo.carga}} </label>
-                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objChoferSelect" ng-click="changeTypeChofer()">
-                            <option ng-repeat="auxC in listaChoferes | filter:searchChofer" value="{{auxC}}">{{auxC.nombre}} </option>
-                        </select>
-                    </div>
 
+                        <div class="col-md-4 col-xs-0">
+                            <input type="text" class="form-control" placeholder="Buscar Producto" ng-model="searchProductoOrden" />
+                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objProductoOrdenSelect" ng-click="changeTypeProductoOrden()">
+                                <option  ng-repeat="auxP in listaProductoOrden | filter:searchProductoOrden" value="{{auxP}}">{{auxP.nombre_producto}} </option>
+                            </select>
+                        </div>
 
-                    <div class="col-md-1 col-xs-0">
-                        <h4>Direccion</h4>
-                    </div>
-
-                    <div class="col-md-3 col-xs-8">
-                        <input type="text" class="form-control">
-
-                    </div>
 
                 </div>
 

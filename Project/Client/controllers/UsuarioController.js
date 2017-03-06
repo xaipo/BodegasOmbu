@@ -129,9 +129,9 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
             },
             data:{
                 id :$scope.id,
-                cedula : $scope.selected.cedula,
-                nombre: $scope.selected.nombre,
-                telefono: $scope.selected.telefono
+                name : $scope.selected.name,
+                pass: $scope.selected.pass,
+                tipo: $scope.selected.tipo
             }
         }).then(function successCallback(response) {
             $scope.obj = {

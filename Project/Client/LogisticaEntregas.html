@@ -137,7 +137,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-10 col-xs-0"></div>
+                    <div class="col-md-3 col-xs-0">
+                        <br>
+
+                        <button class="form-control" type="button" ng-click="redirectConfirmacionEntregas()">
+                          Confirmación Entregas
+                        </button>
+                    </div>
+                    <div class="col-md-7 col-xs-0"></div>
 
                     <div class="col-md-2 col-xs-4">
                         <br>
@@ -158,7 +165,7 @@
                         <table class="table table-hover" >
                             <thead>
                             <tr>
-                                <th></th>
+
                                 <th>#</th>
                                 <th>Código Entrega</th>
                                 <th>Vehículo</th>
@@ -187,7 +194,7 @@
                                 <td> <button type="button" class="btn btn-default form-control " ng-click="redirectModificar($index,item)">Modificar</button></td>
 
                             </tr>
-                            <dir-pagination-controls></dir-pagination-controls> <!--agregar botones paginacion-->
+                            <dir-pagination-controls></dir-pagination-controls>
 
 
 
