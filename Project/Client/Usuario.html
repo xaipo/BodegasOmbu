@@ -107,7 +107,7 @@
                             <li class=""><a href="LogisticaEntregas.html">Logística Entregas</a></li>
                             <li class=""><a href="ReporteDelivery.html">Reportes</a></li>
                             <li class="active"><a href="Usuario.html">Usuarios</a></li>
-                            <li class=""><a href="" >Cerrar Sesión</a></li>
+                            <li class=""><a href="" ng-click="logout()">Cerrar Sesión</a></li>
 
 
                         </ul>
@@ -143,7 +143,7 @@
                     <div class="col-md-3 col-xs-8">
                         <input type="text" class="form-control" ng-model="obj.name">
                         <br>
-                        <input type="text" class="form-control" ng-model="obj.password">
+                        <input type="password" class="form-control" ng-model="obj.pass">
                         <br>
                         <select name="TipoCie" class="form-control" simple ng-model="obj.tipo">
                             <option value="Operador">Operador</option>
@@ -236,7 +236,7 @@
                                 <br>
                                 <br>
                                 <label>Nueva Contraseña</label>
-                                <input type="text" class="form-control" ng-model="selected.password">
+                                <input type="password" class="form-control" ng-model="selected.password">
                                 <br>
 
 

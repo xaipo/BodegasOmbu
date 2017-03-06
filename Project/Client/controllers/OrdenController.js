@@ -615,5 +615,28 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
     }
 
     //******************************************************************************************************************
+    $scope.logout=function(){
 
+        $scope.us = JSON.parse(window.localStorage.getItem('usuario'));
+        console.log($scope.us);
+        if($scope.us.tipo!='Administrador'){
+            localStorage.removeItem('se');
+            localStorage.removeItem('usuario');
+            window.location ='../login.html';
+
+        }else{
+            localStorage.removeItem('se');
+            localStorage.removeItem('usuario');
+            window.location ='login.html';
+
+
+
+        }
+        console.log('Ingresa');
+
+
+
+
+
+    }
 }]);

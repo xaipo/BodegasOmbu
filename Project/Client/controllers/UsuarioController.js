@@ -118,7 +118,7 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
         $scope.id = $scope.selected._id;
         console.log($scope.selected);
-        $scope.obj.password = SHA1($scope.obj.password);
+        $scope.selected.password = SHA1($scope.selected.password);
 
         console.log('ENTRA1');
         $http({
@@ -146,4 +146,29 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
         });
     }
 
+
+    $scope.logout=function(){
+
+        $scope.us = JSON.parse(window.localStorage.getItem('usuario'));
+        console.log($scope.us);
+        if($scope.us.tipo!='Administrador'){
+            localStorage.removeItem('se');
+            localStorage.removeItem('usuario');
+            window.location ='../login.html';
+
+        }else{
+            localStorage.removeItem('se');
+            localStorage.removeItem('usuario');
+            window.location ='login.html';
+
+
+
+        }
+        console.log('Ingresa');
+
+
+
+
+
+    }
 }]);

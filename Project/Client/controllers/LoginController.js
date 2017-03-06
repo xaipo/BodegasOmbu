@@ -24,12 +24,12 @@ $scope.token='';
 
 $scope.login=function(){
 
-//console.log('entrar1');
+console.log('entrar1');
 //console.log($scope.user);
 
 if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!='')    {
 
-
+    console.log($scope.user);
 
 $scope.user.pass=SHA1($scope.user.pass);
 
@@ -61,16 +61,40 @@ $scope.user.password=
             var resp = {
 
                 name:response.data.value.name,
-                _id:response.data.value._id
-
+                _id:response.data.value._id,
+                tipo:response.data.value.tipo
             }
             //console.log(response.data.value);
             //console.log(resp);
-            var obj= response.data;
-            console.log(obj.value.tk);
-            window.localStorage.setItem("se", JSON.stringify(obj.value.tk));
+            var obj= response.data.value;
+            console.log(obj.tk);
+            console.log(obj);
+            switch(obj.tipo) {
+                case 'Administrador':
+
+                    window.localStorage.setItem("se", JSON.stringify(obj.tk));
+                    window.localStorage.setItem("usuario", JSON.stringify(resp));
+                  window.location ='./index.html';
+
+                    break;
+                case 'Supervisor':
+                    console.log(obj);
+                    window.localStorage.setItem("se", JSON.stringify(obj.tk));
+                    window.localStorage.setItem("usuario", JSON.stringify(resp));
+                   window.location ='Administrador/index.html';
+                    break;
+                case 'Operador' :
+                    window.localStorage.setItem("se", JSON.stringify(obj.tk));
+                    window.localStorage.setItem("usuario", JSON.stringify(resp));
+                    window.location ='Normal/index.html';
+                    break;
+                default:
+
+                    alert('El tipo de usuario no tiene permiso para ningun sistema')
+            }
+            /*window.localStorage.setItem("se", JSON.stringify(obj.value.tk));
             window.localStorage.setItem("usuario", JSON.stringify(resp));
-           window.location ='./index.html';
+           window.location ='./index.html';*/
         }
 
 
@@ -91,11 +115,24 @@ $scope.user.password=
 
       $scope.logout=function(){
 
-        localStorage.removeItem('se');
-        localStorage.removeItem('usuario');
-        window.location ='./login.html';
-          $scope.us = JSON.parse(window.localStorage.getItem('usuario'));4
-          //llamar a un post para actualizar el usuario y eliminar el token
+          $scope.us = JSON.parse(window.localStorage.getItem('usuario'));
+          console.log($scope.us);
+          if($scope.us.tipo!='Administrador'){
+              localStorage.removeItem('se');
+              localStorage.removeItem('usuario');
+              window.location ='../login.html';
+
+          }else{
+              localStorage.removeItem('se');
+              localStorage.removeItem('usuario');
+              window.location ='login.html';
+
+
+
+          }
+        console.log('Ingresa');
+
+
 
 
 
