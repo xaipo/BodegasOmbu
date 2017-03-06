@@ -177,6 +177,12 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
         console.log($scope.objVehiculo);
     }
 
+    $scope.changeTypeVehiculoReporte=function(){
+        $scope.objVehiculo=JSON.parse($scope.objVehiculoSelect);
+        $scope.id_vehiculoSearch=$scope.objVehiculo._id;
+        console.log($scope.objVehiculo);
+    }
+
     $scope.changeTypeChofer=function(){
         $scope.objChofer=JSON.parse($scope.objChoferSelect);
         $scope.obj.id_chofer=$scope.objChofer._id;
