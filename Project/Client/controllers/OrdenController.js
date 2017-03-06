@@ -488,7 +488,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
             console.log('falla');
         });
 
-        //window.location ='Ordenes.html';
+        window.location ='Ordenes.html';
     }
 
 
