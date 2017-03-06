@@ -22,7 +22,12 @@ app.controller('VehiculoController', ['$scope', '$http', '$location', 'myProvide
 //funcion que llama a un web services cuando inicializa la pagina
     $scope.inicializar = function () {
 
+        $scope.us = JSON.parse(window.localStorage.getItem('se'));
 
+        if($scope.us==null){
+            window.location ='./error.html';
+
+        }
         $scope.lista = [];
 
         $http({

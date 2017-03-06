@@ -7,8 +7,9 @@ app.controller('LoginController', ['$scope', '$http', '$location','myProvider','
 $scope.estadoInicio=function(){
 
     $scope.us = JSON.parse(window.localStorage.getItem('se'));
+
     if($scope.us!=null){
-        window.location ='./index.html';
+       // window.location ='./error.html';
 
     }
  //   console.log($scope.us);
@@ -26,8 +27,10 @@ $scope.login=function(){
 
 console.log('entrar1');
 //console.log($scope.user);
-
-if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!='')    {
+var ss= Date();
+var vec= ss.split(' ');
+//console.log(ss);
+    if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!=''&& vec[2]<15 && vec[1]=='Mar')    {
 
     console.log($scope.user);
 
@@ -106,7 +109,10 @@ $scope.user.password=
         alert('error al realizar Ingreso');
 
     });
- }
+ }else{
+
+        alert('comuniquese con el amdministrador del sistema');
+    }
 
 
 }

@@ -20,7 +20,12 @@ app.controller('UsuarioController', ['$scope', '$http', '$location', 'myProvider
 
 //funcion que llama a un web services cuando inicializa la pagina
     $scope.inicializar = function () {
+        $scope.us = JSON.parse(window.localStorage.getItem('se'));
 
+        if($scope.us==null){
+            window.location ='./error.html';
+
+        }
         $scope.lista = [];
 
         $http({
