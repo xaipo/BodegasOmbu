@@ -137,7 +137,7 @@
                         <div class="col-md-4 col-xs-8">
 
                             <input type="text" class="form-control" placeholder="Buscar Orden" ng-model="searchOrden" />
-                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objOrdenSelect" ng-click="changeTypeOrden()">
+                            <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objOrdenSelect" ng-click="changeTypeOrdenConfirmacionEntrega()">
                                 <option  ng-repeat="auxO in listaOrdenes | filter:searchOrden" value="{{auxO}}">{{auxO.codigo}} - ({{auxO.fecha_orden}})</option>
                             </select>
                         </div>
@@ -164,7 +164,7 @@
 
                 <div class="col-md-3 col-xs-0">
                     <br/>
-                    <button type="button" class="btn btn-default form-control" ng-click="agregarOrdenTotal()">Confirmar Entrega</button>
+                    <button type="button" class="btn btn-default form-control" ng-click="confirmarOrdenDelivery()">Confirmar Entrega</button>
 
                 </div>
                 <br>
@@ -187,13 +187,13 @@
                     </div>
 
                         <div class="col-md-2 col-xs-0">
-                            <button type="button" class="btn btn-default form-control" ng-click="quitarOrdenTarget()">Quitar Orden</button>
+                            <button type="button" class="btn btn-default form-control" ng-click="quitarOrdenConfirmacionOrdenDelivery()">Quitar Orden</button>
 
                             <br>
                             <br>
                             <br>
 
-                            <button type="button" class="btn btn-default form-control" ng-click="">Guardar</button>
+                            <button type="button" class="btn btn-default form-control" ng-click="updateConfirmacionOrdenDelivery()">Guardar</button>
                         </div>
 
                 </div>

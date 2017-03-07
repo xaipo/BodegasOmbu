@@ -116,7 +116,7 @@
 </header>
 <!-----main -->
 <div class="jumbotron">
-    <form class="form-control" ng-init="cargaVehiculosChoferesOrdenes()">
+    <form class="form-control" ng-init="cargaVehiculosChoferesOrdenes()" name="frmIngresar">
         <div class="panel ">
             <div class="panel-heading hidden-print">
 
@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="col-md-2 col-xs-8">
-                        <input type="text" class="form-control" ng-model="obj.codigo"/>
+                        <input type="text" class="form-control" ng-model="obj.codigo" ng-required="true"/>
                     </div>
 
 
@@ -140,7 +140,7 @@
                     <div class="col-md-5 col-xs-8">
                         <h4>Vehículo</h4>
                         <input type="text" class="form-control" placeholder="Buscar Vehículo" ng-model="searchVehiculo" />
-                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objVehiculoSelect" ng-click="changeTypeVehiculo()">
+                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objVehiculoSelect" ng-click="changeTypeVehiculo()" ng-required="true">
                             <option ng-repeat="auxV in listaVehiculos | filter:searchVehiculo" value="{{auxV}}">{{auxV.placa}} ({{auxV.marca}} - {{auxV.modelo}})</option>
                         </select>
                     </div>
@@ -149,7 +149,7 @@
                     <div class="col-md-5 col-xs-8">
                         <h4>Chofer</h4>
                         <input type="text" class="form-control" placeholder="Buscar Chofer" ng-model="searchChofer" />
-                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objChoferSelect" ng-click="changeTypeChofer()">
+                        <select name="prod" style="height: 100px" class="form-control" multiple ng-model="objChoferSelect" ng-click="changeTypeChofer()" ng-required="true">
                             <option ng-repeat="auxC in listaChoferes | filter:searchChofer" value="{{auxC}}">{{auxC.nombre}} </option>
                         </select>
                     </div>
@@ -354,7 +354,7 @@
 
                     <div class="col-md-2 col-xs-0">
                         <br> <br>
-                        <button type="button" class="btn btn-default form-control " ng-click="save()">Guardar Logística</button>
+                        <button type="button" class="btn btn-default form-control " ng-click="save()" ng-disabled="frmIngresar.$invalid">Guardar Logística</button>
 
                     </div>
 

@@ -247,6 +247,38 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     }
 
 
+    $scope.changeTypeOrdenConfirmacionEntrega=function(){
+        if($scope.objOrdenSelect !=''){
+            $scope.objOrden=JSON.parse($scope.objOrdenSelect);
+            $scope.listaProductoOrden = [];
+            var n = $scope.objOrden.productos.length;
+            for(var i=0; i<n; i++){
+                if($scope.objOrden.productos[i].estado == '1'){
+                    console.log("producto " +i);
+                    $scope.listaProductoOrden.push($scope.objOrden.productos[i]);
+                }
+            }
+
+            $scope.listaProductoOrden.reduce(
+                function (sequence, value) {
+                    return sequence.then(function() {
+                        return promiseProductoOrdenById(value);
+                    }).then(function(obj) {
+                        console.log('END execution with value =', obj.value,
+                            'and result =', obj.result);
+                    });
+                },
+                Promise.resolve()
+            ).then(function() {
+                    console.log('COMPLETED');
+                });
+
+            console.log($scope.objOrden);
+        }
+
+    };
+
+
     $scope.changeTypeProductoOrden=function(){
         $scope.objProductoOrden=JSON.parse($scope.objProductoOrdenSelect);
         console.log($scope.objProductoOrden);
@@ -260,6 +292,48 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             var l1 = $scope.objOrden.productos.length;
             for(var l2=0; l2<l1; l2++){
                 $scope.objOrden.productos[l2].estado = '1'; //estado 0:pendiente 1:asignado 2:entregado
+            }
+
+            //console.log("cambio estado: "+ angular.toJson($scope.objOrden));
+            $scope.listaOrdenesTarget.push($scope.objOrden);
+
+            $scope.cargaAcumulada = 0;
+            var m = $scope.listaOrdenesTarget.length;
+
+            for(var j=0; j<m; j++){
+                var mm=$scope.listaOrdenesTarget[j].productos.length;
+
+                for(var k = 0; k<mm; k++){
+                    $scope.cargaAcumulada += $scope.listaOrdenesTarget[j].productos[k].peso_total;
+                }
+            }
+
+            var n=$scope.listaOrdenes.length;
+            var i=0;
+            while(i<n){
+                if($scope.listaOrdenes[i]._id == $scope.objOrden._id) {
+                    $scope.listaOrdenes.splice(i ,1);
+                    i=n;
+                }
+                i++;
+            }
+
+            $scope.objOrden='';
+            $scope.listaProductoOrden = [];
+            $scope.objProductoOrden = '';
+
+            console.log("break agregar: "+ angular.toJson($scope.listaOrdenesTarget));
+        }
+    }
+
+
+    $scope.confirmarOrdenDelivery=function(){
+        if($scope.objOrden != ''){
+
+            $scope.objOrden.estado = '2'; //estado 0:pendiente 1:asignado 2:entregado
+            var l1 = $scope.objOrden.productos.length;
+            for(var l2=0; l2<l1; l2++){
+                $scope.objOrden.productos[l2].estado = '2'; //estado 0:pendiente 1:asignado 2:entregado
             }
 
             //console.log("cambio estado: "+ angular.toJson($scope.objOrden));
@@ -464,6 +538,71 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
             $scope.listaProductoOrden = [];
 
             console.log("break quitar: "+ angular.toJson($scope.listaOrdenes));
+        }
+    }
+
+
+    $scope.quitarOrdenConfirmacionOrdenDelivery= function () {
+        if($scope.objOrdenSelectTarget!=''){
+            var auxOrden=JSON.parse($scope.objOrdenSelectTarget);
+            auxOrden.estado = '1'; //estado 0:pendiente 1:asignado 2:entregado
+            var control = false;
+            var n = $scope.listaOrdenes.length;
+            var i=0;
+            while(i<n){
+                if($scope.listaOrdenes[i]._id==auxOrden._id){
+                    var m = auxOrden.productos.length;
+                    for(var j=0; j<m; j++){
+                        auxOrden.productos[j].estado = '1';//estado 0:pendiente 1:asignado 2:entregado
+                        $scope.listaOrdenes[i].productos.push(auxOrden.productos[j]);
+                    }
+                    i=n;
+                    control = true;
+                }
+                i++;
+            };
+
+            if(!control){
+                var m1 = auxOrden.productos.length;
+                for(var j1=0; j1<m1; j1++){
+                    auxOrden.productos[j1].estado = '1';//estado 0:pendiente 1:asignado 2:entregado
+                }
+                $scope.listaOrdenes.push(auxOrden);
+            }
+
+
+            var nn = $scope.listaOrdenesTarget.length;
+            var ii=0;
+            while(ii<nn) {
+                if($scope.listaOrdenesTarget[ii]._id == auxOrden._id){
+                    $scope.listaOrdenesTarget.splice(ii,1);
+                    ii=nn;
+                }
+                ii++;
+            };
+
+            // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+            $scope.listaOrdenes.reduce(
+                function (sequence, value) {
+                    return sequence.then(function() {
+                        return promiseUpdateProductoOrdenByIdOrden(value);
+                    }).then(function(obj) {
+                        console.log('update go =', obj.value,
+                            'and go =', obj.result);
+                    });
+                },
+                Promise.resolve()
+            ).then(function() {
+                    console.log('COMPLETED');
+
+                });
+            //  ****************************************************************************************************
+
+            $scope.listaProductoOrdenTarget = [];
+            $scope.objOrdenSelectTarget = '';
+            $scope.listaProductoOrden = [];
+
+            console.log("break quitar confirmacion: "+ angular.toJson($scope.listaOrdenes));
         }
     }
 
@@ -693,9 +832,7 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     };
 
 
-    $scope.generarReporteImpreso1 = function () {
-        console.log("id_vehiculo: " + $scope.id_vehiculoSearch + "fecha: " + $scope.fechaSearch);
-    }
+
 
     $scope.generarReporteImpreso = function () {
         $scope.lista = [];
@@ -838,12 +975,6 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
 
             $scope.obj.ordenes.push(aux);
         };
-
-
-
-
-
-
 
 
         $http({
@@ -1013,6 +1144,37 @@ app.controller('DeliveryController',  ['$scope', '$http', '$location', 'myProvid
     }
 
 
+
+
+    $scope.updateConfirmacionOrdenDelivery = function (){
+
+
+        // PROMESA ASINCRONA promiseUpdateProductoOrdenByIdOrden tabla Orden **********************************************************
+        $scope.listaOrdenesTarget.reduce(
+            function (sequence, value) {
+                return sequence.then(function() {
+                    return promiseUpdateProductoOrdenByIdOrden(value);
+                }).then(function(obj) {
+                    console.log('update go =', obj.value,
+                        'and go =', obj.result);
+                });
+            },
+            Promise.resolve()
+        ).then(function() {
+                console.log('COMPLETED');
+
+
+                $scope.listaOrdenesTarget = '';
+                $scope.listaProductoOrdenTarget = [];
+                $scope.objOrdenSelectTarget = '';
+                $scope.listaProductoOrden = [];
+                window.location ='LogisticaEntregas.html';
+
+            });
+        //  ****************************************************************************************************
+
+
+    }
 
 
 

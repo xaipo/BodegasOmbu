@@ -115,7 +115,7 @@
 </header>
 <!-----main -->
 <div class="jumbotron">
-    <form class="form-control" ng-init="cargaClientesProductos()">
+    <form class="form-control" ng-init="cargaClientesProductos()" name="frmIngresar">
         <div class="panel ">
 
             <div class="container">
@@ -126,14 +126,14 @@
                         <br/>
                         <br/>
                         <h5>CODIGO ORDEN: </h5>
-                        <input class="form-control" placeholder="Código"  type="text" ng-model="obj.codigo" />
+                        <input class="form-control" placeholder="Código"  type="text" ng-model="obj.codigo" ng-required="true"/>
                     </div>
 
                     <div class="col-md-5 col-xs-6">
                         <br>
                         <br>
 
-                        <select name="clien" style="height: 100px" class="form-control" multiple ng-model="objClienteSelect" ng-click="changeTypeCliente()">
+                        <select name="clien" style="height: 100px" class="form-control" multiple ng-model="objClienteSelect" ng-click="changeTypeCliente()" ng-required="true">
                             <option ng-repeat="aux in listaClientes | filter:searchCliente" value="{{aux}}">{{aux.nombre}}</option>
                         </select>
 
@@ -208,7 +208,7 @@
                             </div>
                             <div class="col-md-3 col-xs-0">
                                 <h5>Dirección Orden</h5>
-                                <textarea class="text-capitalize col-md-12 col-xs-1" ng-model="obj.direccion"></textarea>
+                                <textarea class="text-capitalize col-md-12 col-xs-1" ng-model="obj.direccion" ng-required="true"></textarea>
                             </div>
 
                             <div class="col-md-6 col-xs-0">
@@ -299,7 +299,7 @@
                                 <br/>
                                 <br/>
                                 <br/>
-                                <button type="button" class="btn btn-default form-control" ng-click="save()">Guardar</button>
+                                <button type="button" class="btn btn-default form-control" ng-click="save()" ng-disabled="frmIngresar.$invalid">Guardar</button>
                             </div>
 
                             <div class="col-md-2 col-xs-5">
