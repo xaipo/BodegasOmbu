@@ -6,7 +6,7 @@ var router= express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 var assert = require('assert');
-var url = 'mongodb://192.168.1.101:27017/OmbuDelivery';
+var url = 'mongodb://localhost:27017/OmbuDelivery';
 
 
 
@@ -130,6 +130,53 @@ router.get('/getAllDelivery',function(req,res){
     });
 });
 
+router.post('/getAllDeliveryByFechaVehiculo',function(req,res){
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+
+        var fecha = req.body.fecha;
+        var id_vehiculo = req.body.id_vehiculo.toString();
+        console.log(req.body);
+        var collection =db.collection('delivery');
+
+
+
+        collection.find({"id_vehiculo": id_vehiculo,"fecha":fecha}).toArray(function(err, results) {
+            console.log(results);
+            res.send(results);
+            // send HTML file populated with quotes here
+        });
+
+        db.close();
+
+    });
+});
+
+router.post('/getAllDeliveryByFechaChofer',function(req,res){
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+
+        var fecha = req.body.fecha;
+        var id_chofer = req.body.id_chofer.toString();
+        console.log(req.body);
+        var collection =db.collection('delivery');
+
+
+
+        collection.find({"id_chofer": id_chofer,"fecha":fecha}).toArray(function(err, results) {
+            console.log(results);
+            res.send(results);
+            // send HTML file populated with quotes here
+        });
+
+        db.close();
+
+    });
+});
+
+
 router.post('/getByVehiculoAndFechaDelivery',function(req,res){
 
     MongoClient.connect(url, function(err, db) {
@@ -138,7 +185,7 @@ router.post('/getByVehiculoAndFechaDelivery',function(req,res){
 
         var id_vehiculo = req.body.id_vehiculo.toString();
         var fecha = req.body.fecha;
-        console.log(id_vehiculo);
+
         db.collection('delivery').find({"id_vehiculo": id_vehiculo, "fecha":fecha}).toArray(function(err, results){
             console.log(results); // output all records
             res.send(results);

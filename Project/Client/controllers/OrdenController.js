@@ -73,6 +73,7 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
         direccion : '',
         observacion : '',
         estado : '0',
+        leyendaEstado:'',
         productos: []
     };
 
@@ -240,6 +241,18 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
                     aux.fecha_orden =  new Date(aux.fecha_orden);
                     aux.fecha_factura =  new Date(aux.fecha_factura);
 
+                    if(aux.estado == 0){
+                        aux.leyendaEstado = "Por entregar"
+                    }else{
+                        if(aux.estado == 1){
+                            aux.leyendaEstado = "Asignado"
+                        }else{
+                            if(aux.estado == 2){
+                                aux.leyendaEstado = "ENTREGADO"
+                            }
+                        }
+                    }
+
                     promiseClienteById(aux);
 
                     // PROMESA ASINCRONA getProductosOrdenById tabla producto**************************************************
@@ -348,6 +361,10 @@ app.controller('OrdenController', ['$scope', '$http', '$location', 'myProvider',
 
         });
     }
+
+
+
+
 
 
     $scope.save = function (){

@@ -30,7 +30,7 @@ console.log('entrar1');
 var ss= Date();
 var vec= ss.split(' ');
 //console.log(ss);
-    if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!=''&& vec[2]<15 && vec[1]=='Mar')    {
+    if($scope.user.name!=undefined && $scope.user.name!=''&&$scope.user.pass!=undefined && $scope.user.pass!='')    {
 
     console.log($scope.user);
 

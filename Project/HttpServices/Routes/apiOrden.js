@@ -163,4 +163,27 @@ router.get('/getAllOrden',function(req,res){
     });
 });
 
+
+router.get('/getAllOrdenByFecha',function(req,res){
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+
+        console.log(req.body);
+        var fecha = req.body.fecha;
+        var collection =db.collection('orden');
+
+        collection.find({"fecha":fecha}).toArray(function(err, results) {
+            console.log(results);
+            res.send(results);
+            // send HTML file populated with quotes here
+        });
+
+
+
+        db.close();
+
+    });
+});
+
 module.exports=router;
